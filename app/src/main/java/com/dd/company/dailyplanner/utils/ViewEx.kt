@@ -3,9 +3,12 @@ package com.dd.company.dailyplanner.utils
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -111,5 +114,14 @@ fun Context.openActivity(pClass: Class<out Activity>, isFinish: Boolean = false,
     openActivity(pClass, bundle)
     if (isFinish) {
         (this as Activity).finish()
+    }
+}
+
+fun TextView.setTextHtml(content: String) {
+    this.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT);
+    } else {
+        @Suppress("DEPRECATION")
+        Html.fromHtml(content);
     }
 }

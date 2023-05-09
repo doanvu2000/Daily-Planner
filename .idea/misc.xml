@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_main.xml" value="0.4678442028985507" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/drawable/bg_circle_txt_day.xml" value="0.248" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/item_weekly_home.xml" value="0.4678442028985507" />
       </map>
     </option>
   </component>
