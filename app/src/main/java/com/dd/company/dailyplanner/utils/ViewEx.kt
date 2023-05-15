@@ -125,3 +125,7 @@ fun TextView.setTextHtml(content: String) {
         Html.fromHtml(content);
     }
 }
+
+fun Context.getDrawableIdByName(name: String): Int {
+    return this.resources.getIdentifier(name, "drawable", packageName)
+}

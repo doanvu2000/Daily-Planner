@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="5dp"
+    android:paddingEnd="20dp">
+
+    <LinearLayout
+        android:id="@+id/layoutTimePlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/layoutIconPlan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layoutIconPlan">
+
+        <TextView
+            android:id="@+id/tvTimeStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular_400"
+            android:textColor="@color/text_time_plan"
+            app:layout_constraintBottom_toBottomOf="@id/layoutIconPlan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="10:00" />
+
+        <TextView
+            android:id="@+id/tvTimeEnd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/inter_regular_400"
+            android:textColor="@color/text_time_plan"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutIconPlan"
+            tools:text="10:15" />
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layoutIconPlan"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="15dp"
+        app:cardBackgroundColor="@color/bg_icon_plan"
+        app:cardCornerRadius="40dp"
+        app:layout_constraintStart_toEndOf="@+id/layoutTimePlan"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgIconPlan"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            tools:src="@mipmap/ic_launcher" />
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/btnCheckbox"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_checkox"
+        app:layout_constraintBottom_toBottomOf="@id/layoutIconPlan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layoutIconPlan" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/btnCheckbox"
+        app:layout_constraintStart_toEndOf="@id/layoutIconPlan"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTimeCountPlan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/inter_regular_400"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textColor="@color/text_time_plan"
+            tools:text="10:00-10:15 (15 phút)" />
+
+        <TextView
+            android:id="@+id/tvDescriptionPlan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/inter_semi_bold_600"
+            android:textColor="@color/text_title_plan"
+            android:textSize="18sp"
+            tools:text="Trả lời emails" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

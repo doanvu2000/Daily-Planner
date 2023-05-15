@@ -1,7 +1,6 @@
 package com.dd.company.dailyplanner.ui.home
 
 import android.view.LayoutInflater
-import androidx.recyclerview.widget.RecyclerView
 import com.dd.company.dailyplanner.data.WeekEntity
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.base.BaseActivity
@@ -9,9 +8,13 @@ import com.dd.company.dailyplanner.utils.DateUtil
 import com.dd.company.dailyplanner.utils.setGridManager
 import com.dd.company.dailyplanner.utils.setOnSafeClick
 import com.dd.company.dailyplanner.utils.setTextHtml
-import java.util.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
+    companion object {
+        const val COLOR_BLACK = "#000000"
+        const val COLOR_TEXT_YEAR = "#59AAD7"
+    }
+
     private val weekAdapter by lazy {
         WeekAdapter()
     }
@@ -60,7 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val monthStr = "Tháng ${DateUtil.getMonthInt()} năm "
         val yearStr = "${DateUtil.getYear()}"
         val text =
-            "<font color=\"#000000\">$monthStr</font><font color=\"#59AAD7\">$yearStr</font>"
+            "<font color=\"$COLOR_BLACK\">$monthStr</font><font color=\"$COLOR_TEXT_YEAR\">$yearStr</font>"
         binding.tvTimeTitle.setTextHtml(text)
     }
 

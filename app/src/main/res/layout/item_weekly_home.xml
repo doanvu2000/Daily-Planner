@@ -40,6 +40,7 @@
     </RelativeLayout>
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/imgCheckMission"
         android:layout_width="20dp"
         android:layout_height="20dp"
