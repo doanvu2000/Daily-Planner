@@ -24,40 +24,49 @@ object DateUtil {
     }
 
     fun diffTime(startTime: Long, endTime: Long): String {
-        val timeFormat = getTimeFormat(endTime - startTime, DATE_FORMAT_HOUR_MINUTES)
-        val split = timeFormat.split("-")
-        val years = split[0].toIntOrNull()
-        val months = split[1].toIntOrNull()
-        val days = split[2].toIntOrNull()
-        val hours = split[3].toIntOrNull()
-        val minutes = split[4].toIntOrNull()
+        val diff: Long = Date(endTime).time - Date(startTime).time
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
         var rs = ""
-        years?.let {
-            if (it > 0) {
-                rs += "$it năm "
-            }
+        if (days > 0) {
+            rs += "$days ngày "
         }
-        months?.let {
-            if (it > 0) {
-                rs += "$it tháng "
-            }
+        if (hours > 0) {
+            rs += "$hours giờ "
         }
-        days?.let {
-            if (it > 0) {
-                rs += "$it ngày "
-            }
-        }
-        hours?.let {
-            if (it > 0) {
-                rs += "$it giờ "
-            }
-        }
-        minutes?.let {
-            if (it > 0) {
-                rs += "$it phút "
-            }
+        if (minutes > 0) {
+            rs += "$minutes phút "
         }
         return rs
     }
 
+    fun checkToDay(time: Long): Boolean {
+        val timeFormat = getTimeFormat(time, DATE_FORMAT_HOUR_MINUTES)
+        val split = timeFormat.split("-")
+        val years = split[0].toIntOrNull()
+        val months = split[1].toIntOrNull()
+        val days = split[2].toIntOrNull()
+        val calendar = Calendar.getInstance()
+        if (days != calendar.get(Calendar.DAY_OF_MONTH)) {
+            return false
+        }
+        if (months != calendar.get(Calendar.MONTH) + 1) {
+            return false
+        }
+        if (years != calendar.get(Calendar.YEAR)) {
+            return false
+        }
+        return true
+    }
+
+    fun checkMatchTime(time: Long, day: Int, month: Int, year: Int): Boolean {
+        val timeFormat = getTimeFormat(time, DATE_FORMAT_HOUR_MINUTES)
+        val split = timeFormat.split("-")
+        val years = split[0].toIntOrNull() ?: 0
+        val months = split[1].toIntOrNull() ?: 0
+        val days = split[2].toIntOrNull() ?: 0
+        return days == day && months == month && years == year
+    }
 }

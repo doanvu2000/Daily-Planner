@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="30dp"
     android:paddingStart="5dp"
     android:paddingEnd="20dp">
 
@@ -63,7 +64,7 @@
         android:id="@+id/btnCheckbox"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/ic_checkox"
+        android:src="@drawable/ic_checkbox"
         app:layout_constraintBottom_toBottomOf="@id/layoutIconPlan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/layoutIconPlan" />

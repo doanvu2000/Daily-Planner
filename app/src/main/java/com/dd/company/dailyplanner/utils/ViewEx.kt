@@ -12,6 +12,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 fun View.hideKeyboard() {
@@ -128,4 +131,16 @@ fun TextView.setTextHtml(content: String) {
 
 fun Context.getDrawableIdByName(name: String): Int {
     return this.resources.getIdentifier(name, "drawable", packageName)
+}
+
+fun <T> Call<T>.enqueueShort(success: ((Response<T>) -> Unit)? = null, failed: ((Throwable) -> Unit)? = null) {
+    this.enqueue(object : Callback<T> {
+        override fun onResponse(call: Call<T>, response: Response<T>) {
+            success?.invoke(response)
+        }
+
+        override fun onFailure(call: Call<T>, t: Throwable) {
+            failed?.invoke(t)
+        }
+    })
 }

@@ -1,8 +1,10 @@
 package com.dd.company.dailyplanner.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.dd.company.dailyplanner.R
 import com.dd.company.dailyplanner.data.PlanEntity
 import com.dd.company.dailyplanner.databinding.ItemLayoutPlanBinding
 import com.dd.company.dailyplanner.ui.base.BaseAdapterRecyclerView
@@ -10,6 +12,7 @@ import com.dd.company.dailyplanner.utils.DateUtil
 import com.dd.company.dailyplanner.utils.getDrawableIdByName
 
 class PlanAdapter : BaseAdapterRecyclerView<PlanEntity, ItemLayoutPlanBinding>() {
+    var onClickCheckBox: ((isDone: Boolean) -> Unit)? = null
     override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup): ItemLayoutPlanBinding {
         return ItemLayoutPlanBinding.inflate(inflater, parent, false)
     }
@@ -23,6 +26,17 @@ class PlanAdapter : BaseAdapterRecyclerView<PlanEntity, ItemLayoutPlanBinding>()
         binding.tvTimeCountPlan.text = "${binding.tvTimeStart.text}-${binding.tvTimeEnd.text} " +
                 "(${DateUtil.diffTime(item.startTime, item.endTime)})"
         binding.tvDescriptionPlan.text = item.content
+        if (item.isDone) {
+            binding.btnCheckbox.setImageResource(R.drawable.ic_checkbox_selected)
+            binding.tvDescriptionPlan.paintFlags = binding.tvDescriptionPlan.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            binding.btnCheckbox.setImageResource(R.drawable.ic_checkbox)
+            binding.tvDescriptionPlan.paintFlags = binding.tvTimeStart.paintFlags
+        }
+        binding.btnCheckbox.setOnClickListener {
+            item.isDone = !item.isDone
+            notifyItemChanged(position)
+        }
     }
 
     private fun getHourMinutes(time: Long): String {

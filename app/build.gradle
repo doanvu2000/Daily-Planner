@@ -49,4 +49,20 @@ dependencies {
     implementation "androidx.room:room-ktx:2.4.3"
     // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:2.4.3"
+
+    // Lifecycle components
+    def lifecycle_version = "2.4.0"
+    //noinspection GradleDependency
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    //logger
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    //retrofit
+    def retrofit_version = '2.9.0'
+    def gson_version = '2.9.0'
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
+    implementation("com.squareup.retrofit2:converter-gson:$gson_version")
 }

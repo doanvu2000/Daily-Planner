@@ -7,6 +7,7 @@ import com.dd.company.dailyplanner.R
 import com.dd.company.dailyplanner.data.WeekEntity
 import com.dd.company.dailyplanner.databinding.ItemWeeklyHomeBinding
 import com.dd.company.dailyplanner.ui.base.BaseAdapterRecyclerView
+import com.dd.company.dailyplanner.utils.getDrawableIdByName
 import com.dd.company.dailyplanner.utils.visibleByCondition
 
 class WeekAdapter : BaseAdapterRecyclerView<WeekEntity, ItemWeeklyHomeBinding>() {
@@ -16,12 +17,17 @@ class WeekAdapter : BaseAdapterRecyclerView<WeekEntity, ItemWeeklyHomeBinding>()
 
     override fun bindData(binding: ItemWeeklyHomeBinding, item: WeekEntity, position: Int) {
         binding.apply {
-            tvDayTitle.text = item.title
-            tvDayNumber.text = item.day.toString()
-            imgCheckMission.visibleByCondition(item.haveMission)
-            imgBackground.visibleByCondition(item.isSelected)
             val colorText = if (item.isSelected) R.color.white else R.color.black
-            tvDayNumber.setTextColor(ContextCompat.getColor(binding.root.context, colorText))
+            tvDayNumber.apply {
+                text = item.day.toString()
+                setTextColor(ContextCompat.getColor(binding.root.context, colorText))
+            }
+            tvDayTitle.text = item.title
+            imgCheckMission.apply {
+                visibleByCondition(item.haveMission)
+                setImageResource(binding.root.context.getDrawableIdByName(item.icon))
+            }
+            imgBackground.visibleByCondition(item.isSelected)
         }
     }
 
@@ -33,6 +39,5 @@ class WeekAdapter : BaseAdapterRecyclerView<WeekEntity, ItemWeeklyHomeBinding>()
         }
         dataList[position].isSelected = true
         notifyItemChanged(position)
-
     }
 }

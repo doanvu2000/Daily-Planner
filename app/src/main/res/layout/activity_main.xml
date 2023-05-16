@@ -1,66 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_app"
-    android:orientation="vertical"
     tools:context=".ui.home.MainActivity">
 
     <LinearLayout
-        android:id="@+id/layoutToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvTimeTitle"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/layoutToolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/inter_bold_700"
-            android:textSize="24sp"
-            tools:text="Tháng 3 năm 2023" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/btnCalendar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_calendar" />
+            <TextView
+                android:id="@+id/tvTimeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_bold_700"
+                android:textSize="24sp"
+                tools:text="Tháng 3 năm 2023" />
 
-        <ImageView
-            android:id="@+id/btnInbox"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_inbox" />
+            <ImageView
+                android:id="@+id/btnCalendar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_calendar" />
 
-        <ImageView
-            android:id="@+id/btnSetting"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_setting" />
+            <ImageView
+                android:id="@+id/btnInbox"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_inbox" />
+
+            <ImageView
+                android:id="@+id/btnSetting"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_setting" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvWeekly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="7"
+            tools:itemCount="7"
+            tools:listitem="@layout/item_weekly_home" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_round_home"
+            android:paddingStart="5dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvPlan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                tools:listitem="@layout/item_layout_plan" />
+        </LinearLayout>
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvWeekly"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddNewPlan"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="7"
-        tools:itemCount="7"
-        tools:listitem="@layout/item_weekly_home" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="30dp"
+        android:src="@drawable/ic_add" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bg_round_home">
-
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
