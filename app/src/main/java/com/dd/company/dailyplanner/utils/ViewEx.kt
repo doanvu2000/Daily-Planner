@@ -9,6 +9,7 @@ import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -143,4 +144,8 @@ fun <T> Call<T>.enqueueShort(success: ((Response<T>) -> Unit)? = null, failed: (
             failed?.invoke(t)
         }
     })
+}
+
+fun Context.showToast(msg: String) {
+    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

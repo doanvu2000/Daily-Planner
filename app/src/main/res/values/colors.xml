@@ -12,4 +12,5 @@
     <color name="background_app">#E1E1E1</color>
     <color name="text_time_plan">#98989E</color>
     <color name="text_title_plan">#59AAD7</color>
+    <color name="text_loop">#8C8C8C</color>
 </resources>

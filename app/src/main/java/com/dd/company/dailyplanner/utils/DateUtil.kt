@@ -69,4 +69,19 @@ object DateUtil {
         val days = split[2].toIntOrNull() ?: 0
         return days == day && months == month && years == year
     }
+
+    fun formatHourMinutes(hour: Int, minutes: Int): String {
+        var rs = ""
+        rs += if (hour < 10) {
+            "0$hour:"
+        } else {
+            "$hour:"
+        }
+        rs += if (minutes < 10) {
+            "0$minutes"
+        } else {
+            "$minutes"
+        }
+        return rs
+    }
 }
