@@ -13,4 +13,7 @@
     <color name="text_time_plan">#98989E</color>
     <color name="text_title_plan">#59AAD7</color>
     <color name="text_loop">#8C8C8C</color>
+    <color name="yellow_background">#FFBB1E</color>
+    <color name="grey_shadow">#F2F2F2</color>
+
 </resources>

@@ -411,6 +411,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvNeedNotification"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -421,6 +422,7 @@
                     android:textSize="18sp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutNotification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
@@ -502,48 +504,88 @@
                         app:layout_constraintBottom_toBottomOf="@id/imgNotificationEnd"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/imgNotificationEnd" />
+                    <!--                    <View-->
+                    <!--                        android:id="@+id/line2"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="1dp"-->
+                    <!--                        android:layout_marginHorizontal="4dp"-->
+                    <!--                        android:layout_marginTop="10dp"-->
+                    <!--                        android:background="#C4C4C6"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@id/imgNotificationEnd" />-->
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imgNotificationBefore"-->
+                    <!--                        android:layout_width="20dp"-->
+                    <!--                        android:layout_height="20dp"-->
+                    <!--                        android:layout_marginStart="10dp"-->
+                    <!--                        android:layout_marginTop="10dp"-->
+                    <!--                        android:src="@drawable/ic_notification_on"-->
+                    <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@id/line2" />-->
 
-                    <View
-                        android:id="@+id/line2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginHorizontal="4dp"
-                        android:layout_marginTop="10dp"
-                        android:background="#C4C4C6"
-                        app:layout_constraintTop_toBottomOf="@id/imgNotificationEnd" />
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="10dp"-->
+                    <!--                        android:fontFamily="@font/inter_regular_400"-->
+                    <!--                        android:text="5 phút trước khi bắt đầu"-->
+                    <!--                        android:textColor="@color/black"-->
+                    <!--                        android:textSize="16dp"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="@id/imgNotificationBefore"-->
+                    <!--                        app:layout_constraintStart_toEndOf="@id/imgNotificationBefore"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@id/imgNotificationBefore" />-->
 
-                    <ImageView
-                        android:id="@+id/imgNotificationBefore"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/ic_notification_on"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/line2" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular_400"
-                        android:text="5 phút trước khi bắt đầu"
-                        android:textColor="@color/black"
-                        android:textSize="16dp"
-                        app:layout_constraintBottom_toBottomOf="@id/imgNotificationBefore"
-                        app:layout_constraintStart_toEndOf="@id/imgNotificationBefore"
-                        app:layout_constraintTop_toTopOf="@id/imgNotificationBefore" />
-
-                    <ImageView
-                        android:id="@+id/imgCloseBefore"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:src="@drawable/ic_close"
-                        app:layout_constraintBottom_toBottomOf="@id/imgNotificationBefore"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/imgNotificationBefore" />
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imgCloseBefore"-->
+                    <!--                        android:layout_width="20dp"-->
+                    <!--                        android:layout_height="20dp"-->
+                    <!--                        android:layout_marginEnd="5dp"-->
+                    <!--                        android:src="@drawable/ic_close"-->
+                    <!--                        app:layout_constraintBottom_toBottomOf="@id/imgNotificationBefore"-->
+                    <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@id/imgNotificationBefore" />-->
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/inter_bold_700"
+                    android:text="Thêm chi tiết"
+                    android:textColor="#80000000"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginVertical="10dp"
+                    android:background="@drawable/layout_round_10"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="22dp"
+                    android:paddingVertical="12dp">
+
+                    <EditText
+                        android:id="@+id/edtDetailPlan"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:hint="Thêm ghi chú, đường liên kết tới cuộc họp hoặc số điện thoại, ..." />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnCreate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@drawable/background_button_continue"
+                    android:fontFamily="@font/inter_bold_700"
+                    android:text="Tạo nhiệm vụ"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

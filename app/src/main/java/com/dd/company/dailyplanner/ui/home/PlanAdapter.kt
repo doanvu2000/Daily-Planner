@@ -12,7 +12,7 @@ import com.dd.company.dailyplanner.utils.DateUtil
 import com.dd.company.dailyplanner.utils.getDrawableIdByName
 
 class PlanAdapter : BaseAdapterRecyclerView<PlanEntity, ItemLayoutPlanBinding>() {
-    var onClickCheckBox: ((isDone: Boolean) -> Unit)? = null
+    var onClickCheckBox: ((item: PlanEntity) -> Unit)? = null
     override fun inflateBinding(inflater: LayoutInflater, parent: ViewGroup): ItemLayoutPlanBinding {
         return ItemLayoutPlanBinding.inflate(inflater, parent, false)
     }
@@ -36,6 +36,7 @@ class PlanAdapter : BaseAdapterRecyclerView<PlanEntity, ItemLayoutPlanBinding>()
         binding.btnCheckbox.setOnClickListener {
             item.isDone = !item.isDone
             notifyItemChanged(position)
+            onClickCheckBox?.invoke(item)
         }
     }
 
