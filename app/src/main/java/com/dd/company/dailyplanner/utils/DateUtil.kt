@@ -1,6 +1,7 @@
 package com.dd.company.dailyplanner.utils
 
 import android.annotation.SuppressLint
+import com.dd.company.dailyplanner.utils.DateUtil.toCalendar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.min
@@ -119,9 +120,39 @@ object DateUtil {
         return String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + year
     }
 
-    fun Long.toCalendar():Calendar{
+    fun Long.toCalendar(): Calendar {
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = this
         return calendar
+    }
+
+    fun Long.getYear(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar.get(Calendar.YEAR)
+    }
+
+    fun Long.getMonth(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar.get(Calendar.MONTH) + 1
+    }
+
+    fun Long.getDay(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar.get(Calendar.DAY_OF_MONTH)
+    }
+
+    fun Long.getHour(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar.get(Calendar.HOUR_OF_DAY)
+    }
+
+    fun Long.getMinutes(): Int {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar.get(Calendar.MINUTE)
     }
 }

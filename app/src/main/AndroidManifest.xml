@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.dd.company.dailyplanner" >
+    package="com.dd.company.dailyplanner">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
@@ -23,13 +23,18 @@
 
         <receiver android:name=".ui.setting.notify.AlarmReceiver" />
 
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.inbox.InboxActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.editplan.EditPlanActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.setting.SettingActivity"
             android:exported="true"
             android:label="@string/title_activity_setting"
-            android:theme="@style/Theme.DailyPlanner.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.DailyPlanner.NoActionBar" />
         <activity
             android:name=".ui.home.MainActivity"
             android:exported="true" />
@@ -42,14 +47,12 @@
         <activity
             android:name=".ui.splash.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.addplan.AddPlanActivity"
             android:exported="true" />

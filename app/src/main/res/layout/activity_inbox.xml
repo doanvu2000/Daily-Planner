@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="22dp"
+    tools:context=".ui.inbox.InboxActivity">
+
+    <ImageView
+        android:id="@+id/btnClose"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_arrow_down" />
+
+    <ImageView
+        android:id="@+id/btnAddnewInbox"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_plus_inbox" />
+
+    <LinearLayout
+        android:id="@+id/layoutInboxEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/layout_inbox_empty" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_add_inbox" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutListInbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnClose"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_item_inbox_not_done"
+            android:id="@+id/rcvInboxNotDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/inter_semi_bold_600"
+            android:text="Công việc đã hoàn thành"
+            android:textColor="@color/text_loop"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_item_inbox_done"
+            android:id="@+id/rcvInboxDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>

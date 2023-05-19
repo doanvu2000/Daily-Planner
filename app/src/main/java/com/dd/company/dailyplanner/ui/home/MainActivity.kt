@@ -12,6 +12,8 @@ import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.addplan.AddPlanActivity
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.editplan.EditPlanActivity
+import com.dd.company.dailyplanner.ui.inbox.InboxActivity
 import com.dd.company.dailyplanner.ui.setting.SettingActivity
 import com.dd.company.dailyplanner.utils.*
 import java.text.SimpleDateFormat
@@ -39,6 +41,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
     private val dialogPickDate by lazy {
         DialogPickDate(this)
+    }
+    private val dialogConfirmRemovePlan by lazy {
+        DialogConfirmRemovePlan(this)
     }
     private val email by lazy {
         SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN).trim()
@@ -179,7 +184,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnCalendar.setOnSafeClick {
             showDialogPickDate()
         }
-        binding.btnInbox.setOnSafeClick { }
+        binding.btnInbox.setOnSafeClick {
+            openActivity(InboxActivity::class.java)
+        }
         binding.btnSetting.setOnSafeClick {
             openActivity(SettingActivity::class.java)
         }
@@ -209,8 +216,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         binding.btnRemovePlan.setOnSafeClick {
             //remove plan
-            listPlan.remove(planSelected)
-            syncPlan()
+            showDialogConfirmRemove()
         }
         binding.btnCopyPlan.setOnSafeClick {
             //copy plan
@@ -223,6 +229,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             planSelected?.let { syncPlan() }
             hideLayoutEdit()
         }
+        binding.btnEditPlan.setOnSafeClick {
+            hideLayoutEdit()
+            openActivity(EditPlanActivity::class.java, bundleOf("plan_entity" to planSelected))
+        }
+    }
+
+    private fun showDialogConfirmRemove() {
+        if (!dialogConfirmRemovePlan.isShowing()) {
+            dialogConfirmRemovePlan.show {
+                listPlan.remove(planSelected)
+                syncPlan("Nhiệm vụ đã xóa!")
+                hideLayoutEdit()
+            }
+        }
     }
 
     private fun hideLayoutEdit() {
@@ -231,9 +251,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun syncPlan() {
+    private fun syncPlan(msg: String? = null) {
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
-            planAdapter.notifyDataSetChanged()
+            initDataPlan()
+            msg?.let {
+                showToast(it)
+            }
         }, failed = {
             showToast("Failed to update status plan")
         })
@@ -293,6 +316,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onBackPressed() {
         if (dialogPickDate.isShowing()) {
             dialogPickDate.hide()
+        } else if (dialogConfirmRemovePlan.isShowing()) {
+            dialogConfirmRemovePlan.hide()
         } else {
             super.onBackPressed()
         }

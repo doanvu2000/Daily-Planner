@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="aqua">#59AAD7</color>
+    <color name="aqua_10">#1A59AAD7</color>
     <color name="bg_icon_plan">#ACD5EB</color>
     <color name="background_app">#E1E1E1</color>
     <color name="text_time_plan">#98989E</color>
