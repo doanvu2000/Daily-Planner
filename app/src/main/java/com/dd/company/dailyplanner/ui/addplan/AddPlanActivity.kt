@@ -30,7 +30,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
     }
 
     private val email by lazy {
-        "huannd0101@gmail.com"
+        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN)
     }
     private val day by lazy {
         intent?.extras?.getInt("day") ?: 0

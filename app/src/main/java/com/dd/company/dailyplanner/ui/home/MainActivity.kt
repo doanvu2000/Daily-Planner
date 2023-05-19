@@ -38,7 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         DialogPickDate(this)
     }
     private val email by lazy {
-        "huannd0101@gmail.com"
+        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN)
     }
 
     override fun initView() {
