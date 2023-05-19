@@ -10,4 +10,7 @@ interface PlanService {
 
     @POST("api/v1/plans")
     fun syncPlan(@Query("email") email: String, @Body planBody: List<PlanEntity>): Call<Any>
+
+    @POST("api/v1/users")
+    fun registerAccount(@Body accountBody: AccountBody): Call<AccountResponse>
 }
