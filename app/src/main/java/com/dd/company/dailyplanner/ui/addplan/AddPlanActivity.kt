@@ -13,6 +13,7 @@ import com.dd.company.dailyplanner.data.api.PlanService
 import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityAddPlanBinding
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.setting.notify.setReminder
 import com.dd.company.dailyplanner.utils.*
 import java.util.*
 
@@ -196,8 +197,6 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                 this.startTime = timeStart
                 this.endTime = timeEnd
             }
-            isNotifyStartPlan //create notifycation with time start
-            isNotifyEndPlan //create notifycation with time end
         }
         //detail description
         newPlanEntity.name = binding.edtDetailPlan.text.toString()
@@ -205,6 +204,22 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
             LOOP_ONE, LOOP_WEEK, LOOP_MONTH -> {
                 newPlanEntity.id = -1
                 listPlan.add(newPlanEntity)
+                if (isNotifyStartPlan) {
+                    setReminder(
+                        this,
+                        newPlanEntity.content,
+                        DateUtil.getHourMinuteFormatFromLong(newPlanEntity.startTime),
+                        newPlanEntity.startTime
+                    )
+                }
+                if (isNotifyEndPlan) {
+                    setReminder(
+                        this,
+                        newPlanEntity.content,
+                        DateUtil.getHourMinuteFormatFromLong(newPlanEntity.endTime),
+                        newPlanEntity.endTime
+                    )
+                }
             }
             LOOP_DAY -> {
                 val dayOfMonth = when {
@@ -224,6 +239,22 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                     plan.endTime = timeEnd
                     plan.id = -i.toLong()
                     listPlan.add(plan)
+                    if (isNotifyStartPlan) {
+                        setReminder(
+                            this,
+                            plan.content,
+                            DateUtil.getHourMinuteFormatFromLong(plan.startTime),
+                            plan.startTime
+                        )
+                    }
+                    if (isNotifyEndPlan) {
+                        setReminder(
+                            this,
+                            plan.content,
+                            DateUtil.getHourMinuteFormatFromLong(plan.endTime),
+                            plan.endTime
+                        )
+                    }
                 }
 
             }
@@ -264,7 +295,8 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
 
         val timeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
             if (isValidateTime(hourOfDay, minute)) {
-                binding.tvEndTime.text = "Time end: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+                binding.tvEndTime.text =
+                    "Time end: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
                 lastSelectedHourEnd = hourOfDay
                 lastSelectedMinuteEnd = minute
             } else {
@@ -283,7 +315,8 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
         val is24HView = true
 
         val timeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
-            binding.tvStartTime.text = "Time start: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+            binding.tvStartTime.text =
+                "Time start: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
             lastSelectedHourStart = hourOfDay
             lastSelectedMinuteStart = minute
         }
