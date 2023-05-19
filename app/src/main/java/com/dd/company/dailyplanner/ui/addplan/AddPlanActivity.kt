@@ -30,7 +30,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
     }
 
     private val email by lazy {
-        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN)
+        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN).trim()
     }
     private val day by lazy {
         intent?.extras?.getInt("day") ?: 0
@@ -75,7 +75,6 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
     }
 
     override fun initData() {
-        val email = "huannd0101@gmail.com"
         apiService.getPlan(email).enqueueShort(success = {
             val body = it.body()
             if (body?.status == true) {
@@ -188,10 +187,10 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                 return
             }
             val timeStart = Calendar.getInstance().apply {
-                set(year, month, day, lastSelectedHourStart, lastSelectedMinuteStart)
+                set(year, month - 1, day, lastSelectedHourStart, lastSelectedMinuteStart)
             }.timeInMillis
             val timeEnd = Calendar.getInstance().apply {
-                set(year, month, day, lastSelectedHourEnd, lastSelectedMinuteEnd)
+                set(year, month - 1, day, lastSelectedHourEnd, lastSelectedMinuteEnd)
             }.timeInMillis
             newPlanEntity.apply {
                 this.startTime = timeStart
@@ -215,10 +214,10 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                 }
                 for (i in 1..dayOfMonth) {
                     val timeStart = Calendar.getInstance().apply {
-                        set(year, month, i, lastSelectedHourStart, lastSelectedMinuteStart)
+                        set(year, month - 1, i, lastSelectedHourStart, lastSelectedMinuteStart)
                     }.timeInMillis
                     val timeEnd = Calendar.getInstance().apply {
-                        set(year, month, i, lastSelectedHourEnd, lastSelectedMinuteEnd)
+                        set(year, month - 1, i, lastSelectedHourEnd, lastSelectedMinuteEnd)
                     }.timeInMillis
                     val plan = newPlanEntity.copy()
                     plan.startTime = timeStart

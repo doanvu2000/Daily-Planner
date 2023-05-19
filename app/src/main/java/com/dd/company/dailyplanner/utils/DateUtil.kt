@@ -3,6 +3,7 @@ package com.dd.company.dailyplanner.utils
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 object DateUtil {
     const val DATE_FORMAT_HOUR_MINUTES = "yyyy-MM-dd-hh-mm"
@@ -25,10 +26,13 @@ object DateUtil {
 
     fun diffTime(startTime: Long, endTime: Long): String {
         val diff: Long = Date(endTime).time - Date(startTime).time
-        val seconds = diff / 1000
-        val minutes = seconds / 60
-        val hours = minutes / 60
-        val days = hours / 24
+        val NUM_DAY = 1000 * 60 * 60 * 24
+        val NUM_HOUR = 1000 * 60 * 60
+        val NUM_MINUTES = 1000 * 60
+        val NUM_SECOND = 1000
+        val days = diff / NUM_DAY
+        val hours = (diff - days * NUM_DAY) / NUM_HOUR
+        val minutes = (diff - days * NUM_DAY - hours * NUM_HOUR) / NUM_MINUTES
         var rs = ""
         if (days > 0) {
             rs += "$days ngày "
@@ -90,4 +94,28 @@ object DateUtil {
     )
 
     fun getDayCountOfMonth(monthNumber: Int) = mapDayCountOfMonth[monthNumber]
+
+    fun getHourMinuteFormatFromLong(time: Long): String {
+        val timeFormat = getTimeFormat(time, DATE_FORMAT_HOUR_MINUTES)
+        var hour = 0
+        var minutes = 0
+        timeFormat.split("-").also {
+            hour = it[3].toInt()
+            minutes = it[4].toInt()
+        }
+        return formatHourMinutes(hour, minutes)
+    }
+
+    fun getDateFormatFromLong(time: Long): String {
+        val timeFormat = getTimeFormat(time, DATE_FORMAT_HOUR_MINUTES)
+        var year = ""
+        var month = 0
+        var day = 0
+        timeFormat.split("-").also {
+            year = it[0]
+            month = it[1].toInt()
+            day = it[2].toInt()
+        }
+        return String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + year
+    }
 }

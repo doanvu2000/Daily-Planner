@@ -17,6 +17,6 @@ object SharePreferenceUtil {
     }
 
     fun get(key: String): String {
-        return sharePref.getString(key, "") ?: ""
+        return sharePref.getString(key, "")?.trim() ?: ""
     }
 }
