@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 
 object SharePreferenceUtil {
     const val EMAIL_LOGIN = "email_login"
+    const val START_DAY = "startday"
 
     fun init(context: Context) {
         sharePref = context.getSharedPreferences("Plan", Context.MODE_PRIVATE)
@@ -19,4 +20,10 @@ object SharePreferenceUtil {
     fun get(key: String): String {
         return sharePref.getString(key, "")?.trim() ?: ""
     }
+
+    fun setStartDayOfWeek(i:Int){
+        sharePref.edit().putInt(START_DAY, i).apply()
+    }
+
+    fun getStartDayOfWeek():Int = sharePref.getInt(START_DAY,0)
 }
