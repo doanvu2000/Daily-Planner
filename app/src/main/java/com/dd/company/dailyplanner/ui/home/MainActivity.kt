@@ -3,6 +3,7 @@ package com.dd.company.dailyplanner.ui.home
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.core.os.bundleOf
 import com.dd.company.dailyplanner.data.PlanEntity
 import com.dd.company.dailyplanner.data.WeekEntity
@@ -11,6 +12,7 @@ import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.addplan.AddPlanActivity
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.setting.SettingActivity
 import com.dd.company.dailyplanner.utils.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +29,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private var monthSelect = 0
     private var yearSelect = 0
 
+    private var planSelected: PlanEntity? = null
     private var listPlan: MutableList<PlanEntity> = mutableListOf()
     private val weekAdapter by lazy {
         WeekAdapter()
@@ -38,12 +41,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         DialogPickDate(this)
     }
     private val email by lazy {
-        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN)
+        SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN).trim()
     }
 
     override fun initView() {
         setUpWeeklyView()
         setUpListPlan()
+        binding.tvDescriptionPlan.isSelected = true
     }
 
     private fun setUpListPlan() {
@@ -59,7 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         daySelect = calendar.get(Calendar.DAY_OF_MONTH)
         monthSelect = calendar.get(Calendar.MONTH)
         yearSelect = calendar.get(Calendar.YEAR)
-        resetTitleToDay()
+        resetTitleToDay(DateUtil.getMonthInt() + 1, DateUtil.getYear())
         initDataWeekly()
         initDataPlan()
     }
@@ -71,6 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onResume() {
         super.onResume()
         initDataPlan()
+//        initDataWeekly()
     }
 
     private fun initDataPlan() {
@@ -98,18 +103,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             if (listPlanMatchDay.isNotEmpty()) {
                 week.haveMission = true
                 week.icon = listPlanMatchDay.first().icon
-                weekAdapter.notifyDataSetChanged()
             } else {
-                weekAdapter.notifyDataSetChanged()
                 week.haveMission = false
             }
         }
+        weekAdapter.notifyDataSetChanged()
     }
 
     private fun setDataList() {
         planAdapter.setDataList(
             listPlan.filter {
-                it.type == TYPE_PLAN && DateUtil.checkToDay(it.startTime) || DateUtil.checkToDay(it.endTime)
+                it.type == TYPE_PLAN && DateUtil.checkMatchTime(
+                    it.startTime,
+                    daySelect,
+                    monthSelect,
+                    yearSelect
+                ) || DateUtil.checkMatchTime(
+                    it.endTime,
+                    daySelect,
+                    monthSelect,
+                    yearSelect
+                )
             }
         )
     }
@@ -125,7 +139,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             set(Calendar.DAY_OF_MONTH, daySelect)
         }
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val WEEKDAYS = arrayOf("Th2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7", "CN")
+        val WEEKDAYS = DayWeek.getTitleWeek()
         val days = mutableMapOf<Int, String>()
         val space = daySelect - dayOfWeek
         repeat(7) {
@@ -160,13 +174,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     @SuppressLint("ClickableViewAccessibility")
     override fun initListener() {
         binding.tvTimeTitle.setOnSafeClick {
-            resetTitleToDay()
+            resetTitleToDay(DateUtil.getMonthInt() + 1, DateUtil.getYear())
         }
         binding.btnCalendar.setOnSafeClick {
             showDialogPickDate()
         }
         binding.btnInbox.setOnSafeClick { }
-        binding.btnSetting.setOnSafeClick { }
+        binding.btnSetting.setOnSafeClick {
+            openActivity(SettingActivity::class.java)
+        }
         weekAdapter.setOnClickItem { item, position ->
             setSelectDay(position, item)
         }
@@ -181,11 +197,60 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             //call api change data
             val findPlan = listPlan.find { it.id == plan.id }
             findPlan?.isDone = plan.isDone
-            apiService.syncPlan(email, listPlan).enqueueShort(success = {
-                Log.d("doanvv", "planId ${plan.id} is Done")
-            }, failed = {
-                showToast("Failed to update status plan")
-            })
+            syncPlan()
+            planSelected = plan
+        }
+        planAdapter.setOnClickItem { item, position ->
+            planSelected = item
+            showEditBottom(item)
+        }
+        binding.btnCloseEdit.setOnSafeClick {
+            hideLayoutEdit()
+        }
+        binding.btnRemovePlan.setOnSafeClick {
+            //remove plan
+            listPlan.remove(planSelected)
+            syncPlan()
+        }
+        binding.btnCopyPlan.setOnSafeClick {
+            //copy plan
+        }
+        binding.btnDonePlan.setOnSafeClick {
+            //done plan
+            planSelected?.isDone = true
+            val findPlan = listPlan.find { it.id == planSelected?.id }
+            findPlan?.isDone = planSelected?.isDone ?: false
+            planSelected?.let { syncPlan() }
+            hideLayoutEdit()
+        }
+    }
+
+    private fun hideLayoutEdit() {
+        binding.layoutBottomEdit.gone()
+        binding.btnAddNewPlan.visibility = View.VISIBLE
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun syncPlan() {
+        apiService.syncPlan(email, listPlan).enqueueShort(success = {
+            planAdapter.notifyDataSetChanged()
+        }, failed = {
+            showToast("Failed to update status plan")
+        })
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showEditBottom(item: PlanEntity?) {
+        item?.let {
+            binding.layoutBottomEdit.show()
+            binding.btnAddNewPlan.gone()
+            binding.imgIconPlan.setImageResource(getDrawableIdByName(it.icon))
+            val timeStart = DateUtil.getHourMinuteFormatFromLong(it.startTime)
+            val timeEnd = DateUtil.getHourMinuteFormatFromLong(it.endTime)
+            val date = DateUtil.getDateFormatFromLong(it.startTime)
+            val diffTime = DateUtil.diffTime(it.startTime, it.endTime)
+            binding.tvTimeCountPlan.text = "$timeStart-$timeEnd, $date ($diffTime)"
+            binding.tvDescriptionPlan.text = it.content
         }
     }
 
@@ -206,19 +271,20 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun showDialogPickDate() {
         if (!dialogPickDate.isShowing()) {
             dialogPickDate.show(
-                daySelect, monthSelect, yearSelect, true, onClickSubmit = { day, month, year ->
+                daySelect, monthSelect - 1, yearSelect, true, onClickSubmit = { day, month, year ->
                     daySelect = day
                     monthSelect = month
                     yearSelect = year
+                    resetTitleToDay(monthSelect + 1, year)
                     initDataWeekly()
                 }
             )
         }
     }
 
-    private fun resetTitleToDay() {
-        val monthStr = "Tháng ${DateUtil.getMonthInt() + 1} năm "
-        val yearStr = "${DateUtil.getYear()}"
+    private fun resetTitleToDay(month: Int, year: Int) {
+        val monthStr = "Tháng $month năm "
+        val yearStr = "$year"
         val text =
             "<font color=\"$COLOR_BLACK\">$monthStr</font><font color=\"$COLOR_TEXT_YEAR\">$yearStr</font>"
         binding.tvTimeTitle.setTextHtml(text)

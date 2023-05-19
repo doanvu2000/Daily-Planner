@@ -23,9 +23,9 @@ class LoginActivity : AppCompatActivity() {
             openActivity(RegisterActivity::class.java)
         }
         binding.btnLogin.setOnSafeClick {
-            val email = binding.edtGmail.text.toString()
-            val password = binding.edtPassword.text.toString()
-            if (SharePreferenceUtil.get(email) == password) {
+            val email = binding.edtGmail.text.toString().trim()
+            val password = binding.edtPassword.text.toString().trim()
+            if (email.isNotEmpty() && password.isNotEmpty() && SharePreferenceUtil.get(email) == password) {
                 SharePreferenceUtil.save(SharePreferenceUtil.EMAIL_LOGIN, binding.edtGmail.text.toString())
                 openActivity(MainActivity::class.java)
             } else {
