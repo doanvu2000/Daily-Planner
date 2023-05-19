@@ -118,4 +118,10 @@ object DateUtil {
         }
         return String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + year
     }
+
+    fun Long.toCalendar():Calendar{
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = this
+        return calendar
+    }
 }
