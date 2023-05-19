@@ -25,8 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="match_parent"
@@ -37,6 +36,39 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/btn_add_inbox" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutListInbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnClose"
+        android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_item_inbox_not_done"
+            android:id="@+id/rcvInboxNotDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/inter_semi_bold_600"
+            android:text="Công việc đã hoàn thành"
+            android:textColor="@color/text_loop"
+            android:textSize="18sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            tools:itemCount="2"
+            tools:listitem="@layout/layout_item_inbox_done"
+            android:id="@+id/rcvInboxDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
 </RelativeLayout>

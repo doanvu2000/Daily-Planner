@@ -12,6 +12,8 @@ import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.addplan.AddPlanActivity
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.editplan.EditPlanActivity
+import com.dd.company.dailyplanner.ui.inbox.InboxActivity
 import com.dd.company.dailyplanner.ui.setting.SettingActivity
 import com.dd.company.dailyplanner.utils.*
 import java.text.SimpleDateFormat
@@ -182,7 +184,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnCalendar.setOnSafeClick {
             showDialogPickDate()
         }
-        binding.btnInbox.setOnSafeClick { }
+        binding.btnInbox.setOnSafeClick {
+            openActivity(InboxActivity::class.java)
+        }
         binding.btnSetting.setOnSafeClick {
             openActivity(SettingActivity::class.java)
         }
@@ -224,6 +228,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             findPlan?.isDone = planSelected?.isDone ?: false
             planSelected?.let { syncPlan() }
             hideLayoutEdit()
+        }
+        binding.btnEditPlan.setOnSafeClick {
+            hideLayoutEdit()
+            openActivity(EditPlanActivity::class.java, bundleOf("plan_entity" to planSelected))
         }
     }
 

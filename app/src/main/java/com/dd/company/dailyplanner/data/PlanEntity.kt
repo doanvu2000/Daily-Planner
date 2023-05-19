@@ -1,6 +1,7 @@
 package com.dd.company.dailyplanner.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class PlanEntity(
     @SerializedName("id")
@@ -21,4 +22,4 @@ data class PlanEntity(
     var userId: Long = 0L,
     @SerializedName("isDone")
     var isDone: Boolean = false
-)
+) : Serializable

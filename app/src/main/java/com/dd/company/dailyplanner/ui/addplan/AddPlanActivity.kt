@@ -100,7 +100,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                     setSelection(baseTitle[index].length)
                 }
                 if (!isSelectIcon) {
-                    planEntity.icon = baseIconName[index]
+                    newPlanEntity.icon = baseIconName[index]
                     binding.imgIconPlan.setImageResource(baseIcon[index])
                     imagePlan = baseIconName[index]
                 }
