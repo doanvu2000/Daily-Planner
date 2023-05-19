@@ -12,6 +12,7 @@ import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.addplan.AddPlanActivity
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.setting.SettingActivity
 import com.dd.company.dailyplanner.utils.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -179,7 +180,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             showDialogPickDate()
         }
         binding.btnInbox.setOnSafeClick { }
-        binding.btnSetting.setOnSafeClick { }
+        binding.btnSetting.setOnSafeClick {
+            openActivity(SettingActivity::class.java)
+        }
         weekAdapter.setOnClickItem { item, position ->
             setSelectDay(position, item)
         }
@@ -198,6 +201,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             planSelected = plan
         }
         planAdapter.setOnClickItem { item, position ->
+            planSelected = item
             showEditBottom(item)
         }
         binding.btnCloseEdit.setOnSafeClick {

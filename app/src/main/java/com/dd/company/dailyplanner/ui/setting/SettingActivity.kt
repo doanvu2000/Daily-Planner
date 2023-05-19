@@ -1,5 +1,6 @@
 package com.dd.company.dailyplanner.ui.setting
 
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import com.dd.company.dailyplanner.R
@@ -23,9 +24,17 @@ class SettingActivity : BaseActivity<ActivitySettingBinding>() {
         return ActivitySettingBinding.inflate(layoutInflater)
     }
 
-    fun addFragment(fragment: Fragment){
+    fun addFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(R.id.main_container, fragment)
             .addToBackStack(fragment::class.java.simpleName).commitAllowingStateLoss()
+    }
+
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            super.onBackPressed()
+        } else {
+            finish()
+        }
     }
 
 }
