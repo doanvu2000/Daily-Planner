@@ -40,6 +40,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private val dialogPickDate by lazy {
         DialogPickDate(this)
     }
+    private val dialogConfirmRemovePlan by lazy {
+        DialogConfirmRemovePlan(this)
+    }
     private val email by lazy {
         SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN).trim()
     }
@@ -209,8 +212,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         binding.btnRemovePlan.setOnSafeClick {
             //remove plan
-            listPlan.remove(planSelected)
-            syncPlan()
+            showDialogConfirmRemove()
         }
         binding.btnCopyPlan.setOnSafeClick {
             //copy plan
@@ -225,15 +227,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
+    private fun showDialogConfirmRemove() {
+        if (!dialogConfirmRemovePlan.isShowing()) {
+            dialogConfirmRemovePlan.show {
+                listPlan.remove(planSelected)
+                syncPlan("Nhiệm vụ đã xóa!")
+                hideLayoutEdit()
+            }
+        }
+    }
+
     private fun hideLayoutEdit() {
         binding.layoutBottomEdit.gone()
         binding.btnAddNewPlan.visibility = View.VISIBLE
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun syncPlan() {
+    private fun syncPlan(msg: String? = null) {
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
-            planAdapter.notifyDataSetChanged()
+            initDataPlan()
+            msg?.let {
+                showToast(it)
+            }
         }, failed = {
             showToast("Failed to update status plan")
         })
@@ -293,6 +308,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onBackPressed() {
         if (dialogPickDate.isShowing()) {
             dialogPickDate.hide()
+        } else if (dialogConfirmRemovePlan.isShowing()) {
+            dialogConfirmRemovePlan.hide()
         } else {
             super.onBackPressed()
         }
