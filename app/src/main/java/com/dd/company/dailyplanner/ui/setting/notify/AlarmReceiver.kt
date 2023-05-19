@@ -12,7 +12,6 @@ import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import com.dd.company.dailyplanner.R
-import com.dd.company.dailyplanner.utils.DateUtil
 import com.dd.company.dailyplanner.utils.DateUtil.toCalendar
 
 class AlarmReceiver : BroadcastReceiver() {
