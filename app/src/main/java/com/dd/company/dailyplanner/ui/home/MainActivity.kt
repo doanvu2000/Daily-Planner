@@ -1,10 +1,12 @@
 package com.dd.company.dailyplanner.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
+import com.dd.company.dailyplanner.R
 import com.dd.company.dailyplanner.data.PlanEntity
 import com.dd.company.dailyplanner.data.WeekEntity
 import com.dd.company.dailyplanner.data.api.PlanService
@@ -238,7 +240,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         binding.btnDonePlan.setOnSafeClick {
             //done plan
-            planSelected?.isDone = true
+            planSelected?.isDone = !(planSelected?.isDone ?: false)
             val findPlan = listPlan.find { it.id == planSelected?.id }
             findPlan?.isDone = planSelected?.isDone ?: false
             planSelected?.let { syncPlan() }
@@ -274,7 +276,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 showToast(it)
             }
         }, failed = {
-            showToast("Failed to update status plan")
+            showToast("${it.message}")
         })
     }
 
@@ -289,7 +291,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val date = DateUtil.getDateFormatFromLong(it.startTime)
             val diffTime = DateUtil.diffTime(it.startTime, it.endTime)
             binding.tvTimeCountPlan.text = "$timeStart-$timeEnd, $date ($diffTime)"
-            binding.tvDescriptionPlan.text = it.content
+            binding.tvDescriptionPlan.apply {
+                text = it.content
+                if (it.isDone) {
+                    paintFlags = binding.tvTimeTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                    binding.btnDonePlan.setImageResource(R.drawable.layout_not_done_plan)
+                } else {
+                    paintFlags = binding.tvTimeTitle.paintFlags
+                    binding.btnDonePlan.setImageResource(R.drawable.layout_done_plan)
+                }
+            }
         }
     }
 
