@@ -12,7 +12,11 @@ import android.util.Log
 import androidx.core.app.AlarmManagerCompat
 import androidx.core.app.NotificationCompat
 import com.dd.company.dailyplanner.R
+import com.dd.company.dailyplanner.utils.DateUtil
+import com.dd.company.dailyplanner.utils.DateUtil.getHour
+import com.dd.company.dailyplanner.utils.DateUtil.getMinutes
 import com.dd.company.dailyplanner.utils.DateUtil.toCalendar
+import java.util.*
 
 class AlarmReceiver : BroadcastReceiver() {
     companion object {
@@ -66,8 +70,23 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 }
 
+fun checkNow(time: Long): Boolean {
+    val current = Calendar.getInstance().timeInMillis
+    val hourCurrent = current.getHour()
+    val minutesCurrent = current.getMinutes()
+    val hour = time.getHour()
+    val minutes = time.getMinutes()
+    if (hour < hourCurrent)
+        return false
+    if (hour == hourCurrent && minutes < minutesCurrent)
+        return false
+    return true
+}
 
 fun setReminder(context: Context, title: String, content: String, time: Long) {
+    if (!checkNow(time)) {
+        return
+    }
     Log.d("abcc", "setReminder: $title, ${time.toCalendar().time}")
     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val intent = Intent(context, AlarmReceiver::class.java)

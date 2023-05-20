@@ -8,6 +8,7 @@ object DateUtil {
     const val DATE_FORMAT_HOUR_MINUTES = "yyyy-MM-dd-hh-mm"
     private val calendar: Calendar = Calendar.getInstance()
     fun getMonthInt() = calendar.get(Calendar.MONTH)
+    fun getDayInt() = calendar.get(Calendar.DAY_OF_MONTH)
     fun getYear() = calendar.get(Calendar.YEAR)
 
     @SuppressLint("SimpleDateFormat")

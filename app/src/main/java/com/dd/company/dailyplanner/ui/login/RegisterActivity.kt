@@ -21,6 +21,9 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initListener() {
+        binding.btnClose.setOnSafeClick {
+            finish()
+        }
         binding.btnRegister.setOnSafeClick {
             if (isValidate()) {
                 RetrofitClient.getInstance().create(PlanService::class.java)

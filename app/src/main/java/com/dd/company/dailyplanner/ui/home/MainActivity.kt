@@ -1,7 +1,6 @@
 package com.dd.company.dailyplanner.ui.home
 
 import android.annotation.SuppressLint
-import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -81,8 +80,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onResume() {
         super.onResume()
-        initDataPlan()
-//        initDataWeekly()
+        initData()
     }
 
     private fun initDataPlan() {
@@ -137,18 +135,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     @SuppressLint("SimpleDateFormat")
     private fun initDataWeekly() {
+        val dayStartOfWeek = DayWeek.getDayByIndex(SharePreferenceUtil.getStartDayOfWeek() + 2)
         val format = SimpleDateFormat("MM/dd/yyyy")
         val calendar = Calendar.getInstance().apply {
-            firstDayOfWeek = Calendar.MONDAY
-            set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+            firstDayOfWeek = dayStartOfWeek.index
+            set(Calendar.DAY_OF_WEEK, dayStartOfWeek.index)
             set(Calendar.YEAR, yearSelect)
             set(Calendar.MONTH, monthSelect)
             set(Calendar.DAY_OF_MONTH, daySelect)
         }
         val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val WEEKDAYS = DayWeek.getTitleWeek()
+        val fullValueDay = DayWeek.getDayByIndex(dayOfWeek).value
+        val WEEKDAYS = DayWeek.getTitleWeek().toMutableList()
+        when (dayStartOfWeek) {
+            DayWeek.Monday -> Collections.rotate(WEEKDAYS, -1)
+            DayWeek.Tuesday -> Collections.rotate(WEEKDAYS, -2)
+            DayWeek.Wednesday -> Collections.rotate(WEEKDAYS, -3)
+            DayWeek.Thursday -> Collections.rotate(WEEKDAYS, -4)
+            DayWeek.Friday -> Collections.rotate(WEEKDAYS, -5)
+            DayWeek.Saturday -> Collections.rotate(WEEKDAYS, -6)
+            else -> {}
+        }
         val days = mutableMapOf<Int, String>()
-        val space = daySelect - dayOfWeek
+        val space = daySelect - WEEKDAYS.indexOf(fullValueDay) - 1
         repeat(7) {
             calendar.set(Calendar.DAY_OF_MONTH, it + 1 + space)
             days[it + 1] = format.format(calendar.time)
@@ -160,7 +169,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             val month = split[0].toInt()
             val day = split[1].toInt()
             val year = split[2].toInt()
-            val isSelected = day == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+            val isSelected = day == daySelect
             listData.add(
                 WeekEntity(
                     WEEKDAYS[index],
@@ -175,7 +184,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         weekAdapter.setDataList(listData)
         updateUiWeek()
-        setSelectDay(dayOfWeek - 1, weekAdapter.dataList[dayOfWeek - 1])
+        setSelectDay(daySelect)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -194,7 +203,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             openActivity(SettingActivity::class.java)
         }
         weekAdapter.setOnClickItem { item, position ->
-            setSelectDay(position, item)
+            setSelectDay(item?.day ?: DateUtil.getDayInt())
+//            setSelectDay(position, item)
         }
         binding.btnAddNewPlan.setOnSafeClick {
             openActivity(
@@ -283,8 +293,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun setSelectDay(position: Int, item: WeekEntity?) {
-        weekAdapter.setSelected(position)
+    private fun setSelectDay(day: Int) {
+        val index = weekAdapter.dataList.indexOfLast { it.day == day }
+        weekAdapter.setSelected(index)
+        val item = weekAdapter.dataList.find { it.day == day }
         item?.let {
             daySelect = it.day
             monthSelect = it.month

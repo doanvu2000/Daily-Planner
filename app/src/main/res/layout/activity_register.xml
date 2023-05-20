@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold_700"
-            android:text="DAILY PALNNER"
+            android:text="DAILY PLANNER"
             android:textColor="@color/aqua"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,4 +128,21 @@
         android:textSize="16dp"
         android:theme="@style/Theme.MaterialComponents.Light" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnRegister"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:backgroundTint="@color/grey_shadow"
+        android:fontFamily="@font/inter_bold_700"
+        android:paddingVertical="15dp"
+        android:text="Quay lại"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:theme="@style/Theme.MaterialComponents.Light" />
 </RelativeLayout>
