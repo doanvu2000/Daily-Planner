@@ -96,13 +96,8 @@ object DateUtil {
     fun getDayCountOfMonth(monthNumber: Int) = mapDayCountOfMonth[monthNumber]
 
     fun getHourMinuteFormatFromLong(time: Long): String {
-        val timeFormat = getTimeFormat(time, DATE_FORMAT_HOUR_MINUTES)
-        var hour = 0
-        var minutes = 0
-        timeFormat.split("-").also {
-            hour = it[3].toInt()
-            minutes = it[4].toInt()
-        }
+        val hour = time.getHour()
+        val minutes = time.getMinutes()
         return formatHourMinutes(hour, minutes)
     }
 

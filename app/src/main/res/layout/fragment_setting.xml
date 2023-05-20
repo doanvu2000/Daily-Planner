@@ -7,12 +7,12 @@
 
     <ImageView
         android:id="@+id/iv_back"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="15dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_arrow_down" />
+        android:src="@drawable/ic_back_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"

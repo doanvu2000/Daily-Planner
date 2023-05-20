@@ -20,8 +20,8 @@ class PlanAdapter : BaseAdapterRecyclerView<PlanEntity, ItemLayoutPlanBinding>()
     @SuppressLint("SetTextI18n")
     override fun bindData(binding: ItemLayoutPlanBinding, item: PlanEntity, position: Int) {
         val context = binding.root.context
-        binding.tvTimeStart.text = getHourMinutes(item.startTime)
-        binding.tvTimeEnd.text = getHourMinutes(item.endTime)
+        binding.tvTimeStart.text = DateUtil.getHourMinuteFormatFromLong(item.startTime)
+        binding.tvTimeEnd.text = DateUtil.getHourMinuteFormatFromLong(item.endTime)
         binding.imgIconPlan.setImageResource(context.getDrawableIdByName(item.icon))
         binding.tvTimeCountPlan.text = "${binding.tvTimeStart.text}-${binding.tvTimeEnd.text} " +
                 "(${DateUtil.diffTime(item.startTime, item.endTime)})"

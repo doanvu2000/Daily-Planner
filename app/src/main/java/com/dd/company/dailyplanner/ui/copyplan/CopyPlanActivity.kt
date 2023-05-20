@@ -358,6 +358,7 @@ class CopyPlanActivity : BaseActivity<ActivityCopyPlanBinding>() {
         }
         val timePickerDialog = TimePickerDialog(
             this,
+            R.style.DialogTheme,
             timeSetListener, lastSelectedHourEnd, lastSelectedMinuteEnd, is24HView
         )
         timePickerDialog.show()
@@ -375,6 +376,7 @@ class CopyPlanActivity : BaseActivity<ActivityCopyPlanBinding>() {
         }
         val timePickerDialog = TimePickerDialog(
             this,
+            R.style.DialogTheme,
             timeSetListener, lastSelectedHourStart, lastSelectedMinuteStart, is24HView
         )
         timePickerDialog.show()

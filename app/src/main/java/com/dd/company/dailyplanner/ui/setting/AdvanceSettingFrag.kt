@@ -28,6 +28,7 @@ class AdvanceSettingFrag : BaseFragment<LayoutAdvanceSettingBinding>() {
     }
 
     override fun initData() {
+        binding.toolbar.toolbarTitle.text = "Cài đặt nâng cao"
     }
 
     override fun initListener() {

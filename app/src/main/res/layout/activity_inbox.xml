@@ -11,7 +11,7 @@
         android:id="@+id/btnClose"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_arrow_down" />
+        android:src="@drawable/ic_back_toolbar" />
 
     <ImageView
         android:id="@+id/btnAddnewInbox"
