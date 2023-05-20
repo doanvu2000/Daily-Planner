@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.dd.company.dailyplanner.databinding.FragmentSettingBinding
 import com.dd.company.dailyplanner.ui.base.BaseFragment
+import com.dd.company.dailyplanner.utils.SharePreferenceUtil
+import com.dd.company.dailyplanner.utils.openActivity
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>() {
+
+    var isFirstOpen = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,8 +29,16 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         binding.settingNotification.setOnClickListener {
             (activity as? SettingActivity)?.addFragment(SettingNotificationFrag())
         }
-        binding.settingApp.setOnClickListener {
-            (activity as? SettingActivity)?.addFragment(LockAppFragment())
+        binding.swPasscode.setOnCheckedChangeListener { compoundButton, b ->
+            if (b) {
+                if (!isFirstOpen) {
+                    (activity as? SettingActivity)?.openActivity(PasscodeActivity::class.java)
+                } else {
+                    isFirstOpen = false
+                }
+            } else {
+                SharePreferenceUtil.setPassCode("")
+            }
         }
         binding.advanceSetting.setOnClickListener {
             (activity as? SettingActivity)?.addFragment(AdvanceSettingFrag())
@@ -34,6 +46,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         binding.toolbar.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.swPasscode.isChecked = SharePreferenceUtil.getPassCode().isNotEmpty()
     }
 
     override fun inflateLayout(

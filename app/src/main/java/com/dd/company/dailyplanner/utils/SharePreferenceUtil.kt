@@ -21,9 +21,17 @@ object SharePreferenceUtil {
         return sharePref.getString(key, "")?.trim() ?: ""
     }
 
-    fun setStartDayOfWeek(i:Int){
+    fun setStartDayOfWeek(i: Int) {
         sharePref.edit().putInt(START_DAY, i).apply()
     }
 
-    fun getStartDayOfWeek():Int = sharePref.getInt(START_DAY,0)
+    fun getStartDayOfWeek(): Int = sharePref.getInt(START_DAY, 0)
+
+    fun setPassCode(data: String) {
+        sharePref.edit().putString("getPassCode", data).apply()
+    }
+
+    fun getPassCode(): String {
+        return sharePref.getString("getPassCode", "").toString()
+    }
 }

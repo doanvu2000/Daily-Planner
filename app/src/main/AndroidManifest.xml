@@ -57,6 +57,10 @@
         <activity
             android:name=".ui.addplan.AddPlanActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".ui.setting.PasscodeActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

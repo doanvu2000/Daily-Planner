@@ -46,4 +46,285 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iconHeart" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llPasscode"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Passcode"
+                android:paddingStart="12dp"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_lockapp"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enter your passcode"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="16dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/passcode1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_radio_button_unchecked"
+                    android:layout_marginHorizontal="4dp"/>
+
+                <ImageView
+                    android:id="@+id/passcode2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_radio_button_unchecked"
+                    android:layout_marginHorizontal="4dp"/>
+
+                <ImageView
+                    android:id="@+id/passcode3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_radio_button_unchecked"
+                    android:layout_marginHorizontal="4dp"/>
+
+                <ImageView
+                    android:id="@+id/passcode4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_round_radio_button_unchecked"
+                    android:layout_marginHorizontal="4dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/number1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="22dp"
+                android:layout_weight="1"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/number4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="8dp"
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number5"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="8dp"
+                     
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number6"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="8dp"
+                     
+                    android:gravity="center"
+                    android:text="6"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="22dp"
+                android:layout_weight="1"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/number7"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:text="7"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number8"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:text="8"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <TextView
+                    android:id="@+id/number9"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:text="9"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="24dp"
+                android:layout_weight="1"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:text="4"
+                    android:textColor="#333333"
+                    android:textSize="24dp"
+                    android:visibility="invisible" />
+
+                <TextView
+                    android:id="@+id/number0"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+                <ImageView
+                    android:id="@+id/imgDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
+                     
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_delete_passcode"
+                    android:textColor="#333333"
+                    android:textSize="24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
