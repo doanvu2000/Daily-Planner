@@ -20,22 +20,19 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        if (SharePreferenceUtil.getPassCode() != "") {
-            binding.llPasscode.show()
-        } else {
-            startMain(300L)
-        }
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (SharePreferenceUtil.getPassCode() != "") {
+                binding.llPasscode.show()
+            } else {
+                startMain()
+            }
+        }, 2000)
         initListener()
 
     }
 
-    private fun startMain(timeDelay:Long) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            openActivity(LoginActivity::class.java)
-        }, timeDelay)
+    private fun startMain() {
+        openActivity(LoginActivity::class.java, isFinish = true)
     }
 
 
@@ -54,19 +51,19 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private var passCode = ""
-    private fun clickNumber(number : Int) {
+    private fun clickNumber(number: Int) {
         if (number != -1) {
             if (passCode.length == 4) {
                 return
             }
             passCode += number
         } else {
-            passCode = passCode.substring(0, passCode.length -1)
+            passCode = passCode.substring(0, passCode.length - 1)
         }
         showPass(passCode)
         if (passCode.length == 4) {
             if (passCode == SharePreferenceUtil.getPassCode()) {
-                startMain(0L)
+                startMain()
             } else {
                 showToast("Passcode incorrect")
                 passCode = ""
