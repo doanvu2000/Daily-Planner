@@ -13,4 +13,7 @@ interface PlanService {
 
     @POST("api/v1/users")
     fun registerAccount(@Body accountBody: AccountBody): Call<AccountResponse>
+
+    @GET("api/v1/users")
+    fun checkExistEmail(@Query("email") email: String): Call<AccountResponse>
 }

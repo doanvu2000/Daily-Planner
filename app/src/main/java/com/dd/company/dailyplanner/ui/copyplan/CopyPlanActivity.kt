@@ -1,4 +1,4 @@
-package com.dd.company.dailyplanner.ui.editplan
+package com.dd.company.dailyplanner.ui.copyplan
 
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
@@ -10,7 +10,7 @@ import com.dd.company.dailyplanner.R
 import com.dd.company.dailyplanner.data.PlanEntity
 import com.dd.company.dailyplanner.data.api.PlanService
 import com.dd.company.dailyplanner.data.api.RetrofitClient
-import com.dd.company.dailyplanner.databinding.ActivityEditPlanBinding
+import com.dd.company.dailyplanner.databinding.ActivityCopyPlanBinding
 import com.dd.company.dailyplanner.ui.addplan.DialogChooseIcon
 import com.dd.company.dailyplanner.ui.base.BaseActivity
 import com.dd.company.dailyplanner.ui.setting.notify.setReminder
@@ -22,12 +22,12 @@ import com.dd.company.dailyplanner.utils.DateUtil.getMonth
 import com.dd.company.dailyplanner.utils.DateUtil.getYear
 import java.util.*
 
-class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
-
+class CopyPlanActivity : BaseActivity<ActivityCopyPlanBinding>() {
     companion object {
         const val COLOR_BLACK = "#000000"
         const val COLOR_TEXT_YEAR = "#59AAD7"
         const val LOOP_ONE = 1
+        const val LOOP_DAY = 2
         const val LOOP_WEEK = 3
         const val LOOP_MONTH = 4
 
@@ -41,6 +41,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
 
     private var isNotifyStartPlan = true
     private var isNotifyEndPlan = false
+    private var isInbox = false
 
     private var imagePlan = "ic_email"
     private var loopType: Int = 1
@@ -55,16 +56,14 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
     private val dialogChooseIcon by lazy {
         DialogChooseIcon(this)
     }
-
     private val apiService by lazy {
         RetrofitClient.getInstance().create(PlanService::class.java)
     }
-    lateinit var planEntity: PlanEntity
-    private var isInbox = false
+    private lateinit var newPlanEntity: PlanEntity
     private var listPlan: MutableList<PlanEntity> = mutableListOf()
 
     override fun initView() {
-        val str1 = "Chỉnh sửa"
+        val str1 = "Sao chép"
         val str2 = " nhiệm vụ"
         val text =
             "<font color=\"$COLOR_BLACK\">$str1</font><font color=\"$COLOR_TEXT_YEAR\">$str2</font>"
@@ -73,24 +72,24 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
 
     @SuppressLint("SetTextI18n")
     override fun initData() {
-        planEntity = (intent?.extras?.getSerializable("plan_entity") as? PlanEntity) ?: PlanEntity()
+        newPlanEntity = (intent?.extras?.getSerializable("plan_entity") as? PlanEntity) ?: PlanEntity()
         binding.tvStartTime.text =
-            "Time start: ${DateUtil.getHourMinuteFormatFromLong(planEntity.startTime)}"
+            "Time start: ${DateUtil.getHourMinuteFormatFromLong(newPlanEntity.startTime)}"
         binding.tvEndTime.text =
-            "Time end: ${DateUtil.getHourMinuteFormatFromLong(planEntity.endTime)}"
-        binding.imgIconPlan.setImageResource(getDrawableIdByName(planEntity.icon))
-        lastSelectedHourStart = planEntity.startTime.getHour()
-        lastSelectedMinuteStart = planEntity.startTime.getMinutes()
-        lastSelectedHourEnd = planEntity.endTime.getHour()
-        lastSelectedMinuteEnd = planEntity.endTime.getMinutes()
-        year = planEntity.startTime.getYear()
-        month = planEntity.startTime.getMonth()
-        day = planEntity.startTime.getDay()
-        imagePlan = planEntity.icon
+            "Time end: ${DateUtil.getHourMinuteFormatFromLong(newPlanEntity.endTime)}"
+        binding.imgIconPlan.setImageResource(getDrawableIdByName(newPlanEntity.icon))
+        lastSelectedHourStart = newPlanEntity.startTime.getHour()
+        lastSelectedMinuteStart = newPlanEntity.startTime.getMinutes()
+        lastSelectedHourEnd = newPlanEntity.endTime.getHour()
+        lastSelectedMinuteEnd = newPlanEntity.endTime.getMinutes()
+        year = newPlanEntity.startTime.getYear()
+        month = newPlanEntity.startTime.getMonth()
+        day = newPlanEntity.startTime.getDay()
+        imagePlan = newPlanEntity.icon
         isInbox = intent?.extras?.getBoolean("is_inbox") ?: false
         if (isInbox) {
-            planEntity.type = TYPE_INBOX
-            binding.tvTitleLoop.gone()
+            newPlanEntity.type = TYPE_INBOX
+            binding.tvLoopTitle.gone()
             binding.layoutLoop.gone()
             binding.layoutSetTime.gone()
             binding.layoutInbox.show()
@@ -123,7 +122,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
                     setSelection(baseTitle[index].length)
                 }
                 if (!isSelectIcon) {
-                    planEntity.icon = baseIconName[index]
+                    newPlanEntity.icon = baseIconName[index]
                     binding.imgIconPlan.setImageResource(baseIcon[index])
                     imagePlan = baseIconName[index]
                 }
@@ -140,8 +139,8 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
                 hideAllBasePlan()
             }
         }
-        binding.edtTitlePlan.setText(planEntity.content)
-        binding.edtDetailPlan.setText(planEntity.name)
+        binding.edtTitlePlan.setText(newPlanEntity.content)
+        binding.edtDetailPlan.setText(newPlanEntity.name)
         binding.imgIconPlan.setOnClickListener {
             showDialogChooseIcon()
         }
@@ -152,9 +151,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
             showDialogTimeEnd()
         }
         binding.btnAddToBox.setOnClickListener {
-            binding.tvTitleLoop.gone()
-            binding.layoutLoop.gone()
-            planEntity.type = TYPE_INBOX
+            newPlanEntity.type = TYPE_INBOX
             binding.layoutSetTime.gone()
             binding.layoutInbox.show()
             binding.btnAddToBox.gone()
@@ -163,9 +160,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
             binding.layoutNotification.gone()
         }
         binding.btnAddTime.setOnClickListener {
-            binding.tvTitleLoop.show()
-            binding.layoutLoop.show()
-            planEntity.type = TYPE_PLAN
+            newPlanEntity.type = TYPE_PLAN
             binding.layoutSetTime.show()
             binding.layoutInbox.gone()
             binding.btnAddToBox.show()
@@ -175,6 +170,9 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
         }
         binding.tvLoopOne.setOnSafeClick {
             setUpViewLoop(LOOP_ONE)
+        }
+        binding.tvLoopDay.setOnSafeClick {
+            setUpViewLoop(LOOP_DAY)
         }
         binding.tvLoopWeek.setOnSafeClick {
             setUpViewLoop(LOOP_WEEK)
@@ -198,17 +196,17 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
     private fun checkValidateAndUpload() {
         //image plan
         val msg = "Không hợp lệ"
-        planEntity.icon = imagePlan
+        newPlanEntity.icon = imagePlan
         //content plan
         val title = binding.edtTitlePlan.text.toString()
         if (title.isEmpty()) {
             showToast(msg)
             return
         }
-        planEntity.content = title
+        newPlanEntity.content = title
         //loop type: 1-> create 1, 2 -> create all month, 3 -> create 1 in week, 4-> create 1 in month
         //time start
-        if (planEntity.type == TYPE_PLAN) {//if plan, save time start, end
+        if (newPlanEntity.type == TYPE_PLAN) {//if plan, save time start, end
             if (binding.tvStartTime.text.isNullOrEmpty() || binding.tvEndTime.text.isNullOrEmpty()) {
                 showToast(msg)
                 return
@@ -223,45 +221,83 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
             val timeEnd = Calendar.getInstance().apply {
                 set(year, month - 1, day, lastSelectedHourEnd, lastSelectedMinuteEnd)
             }.timeInMillis
-            planEntity.apply {
+            newPlanEntity.apply {
                 this.startTime = timeStart
                 this.endTime = timeEnd
             }
         } else {
-            planEntity.apply {
+            newPlanEntity.apply {
                 this.startTime = 0
                 this.endTime = 0
             }
         }
         //detail description
-        planEntity.name = binding.edtDetailPlan.text.toString()
-        val index = listPlan.indexOfFirst { it.id == planEntity.id }
-        if (index != -1) {
-            listPlan[index] = planEntity
-        }
-        if (isNotifyStartPlan && planEntity.type == TYPE_PLAN) {
-            setReminder(
-                this,
-                planEntity.content,
-                DateUtil.getHourMinuteFormatFromLong(planEntity.startTime),
-                planEntity.startTime
-            )
-        }
-        if (isNotifyEndPlan && planEntity.type == TYPE_PLAN) {
-            setReminder(
-                this,
-                planEntity.content,
-                DateUtil.getHourMinuteFormatFromLong(planEntity.endTime),
-                planEntity.endTime
-            )
+        newPlanEntity.name = binding.edtDetailPlan.text.toString()
+        when (loopType) {
+            LOOP_ONE, LOOP_WEEK, LOOP_MONTH -> {
+                newPlanEntity.id = -1
+                listPlan.add(newPlanEntity)
+                if (isNotifyStartPlan && newPlanEntity.type == TYPE_PLAN) {
+                    setReminder(
+                        this,
+                        newPlanEntity.content,
+                        DateUtil.getHourMinuteFormatFromLong(newPlanEntity.startTime),
+                        newPlanEntity.startTime
+                    )
+                }
+                if (isNotifyEndPlan && newPlanEntity.type == TYPE_PLAN) {
+                    setReminder(
+                        this,
+                        newPlanEntity.content,
+                        DateUtil.getHourMinuteFormatFromLong(newPlanEntity.endTime),
+                        newPlanEntity.endTime
+                    )
+                }
+            }
+            LOOP_DAY -> {
+                val dayOfMonth = when {
+                    month == 2 && year % 4 == 0 && year % 100 != 0 || year % 400 == 0 -> 29
+                    month == 2 -> 28
+                    else -> DateUtil.getDayCountOfMonth(month) ?: 30
+                }
+                for (i in 1..dayOfMonth) {
+                    val timeStart = Calendar.getInstance().apply {
+                        set(year, month - 1, i, lastSelectedHourStart, lastSelectedMinuteStart)
+                    }.timeInMillis
+                    val timeEnd = Calendar.getInstance().apply {
+                        set(year, month - 1, i, lastSelectedHourEnd, lastSelectedMinuteEnd)
+                    }.timeInMillis
+                    val plan = newPlanEntity.copy()
+                    plan.startTime = if (plan.type == TYPE_PLAN) timeStart else 0
+                    plan.endTime = if (plan.type == TYPE_PLAN) timeEnd else 0
+                    plan.id = -i.toLong()
+                    listPlan.add(plan)
+                    if (isNotifyStartPlan && newPlanEntity.type == TYPE_PLAN) {
+                        setReminder(
+                            this,
+                            plan.content,
+                            DateUtil.getHourMinuteFormatFromLong(plan.startTime),
+                            plan.startTime
+                        )
+                    }
+                    if (isNotifyEndPlan && newPlanEntity.type == TYPE_PLAN) {
+                        setReminder(
+                            this,
+                            plan.content,
+                            DateUtil.getHourMinuteFormatFromLong(plan.endTime),
+                            plan.endTime
+                        )
+                    }
+                }
+
+            }
         }
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
-            showToast("edit plan success")
+            showToast("add plan success")
             finish()
         }, failed = {
             showToast("Error when add plan: ${it.message}")
         })
-
     }
 
     private fun setUpCloseIconNotify() {
@@ -276,10 +312,12 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
         val colorLoop = ContextCompat.getColor(this, R.color.text_loop)
 
         binding.tvLoopOne.setBackgroundResource(if (loop == LOOP_ONE) resource else 0)
+        binding.tvLoopDay.setBackgroundResource(if (loop == LOOP_DAY) resource else 0)
         binding.tvLoopWeek.setBackgroundResource(if (loop == LOOP_WEEK) resource else 0)
         binding.tvLoopMonth.setBackgroundResource(if (loop == LOOP_MONTH) resource else 0)
 
         binding.tvLoopOne.setTextColor(if (loop == LOOP_ONE) colorWhite else colorLoop)
+        binding.tvLoopDay.setTextColor(if (loop == LOOP_DAY) colorWhite else colorLoop)
         binding.tvLoopWeek.setTextColor(if (loop == LOOP_WEEK) colorWhite else colorLoop)
         binding.tvLoopMonth.setTextColor(if (loop == LOOP_MONTH) colorWhite else colorLoop)
     }
@@ -363,7 +401,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
         }
     }
 
-    override fun inflateViewBinding(inflater: LayoutInflater): ActivityEditPlanBinding {
-        return ActivityEditPlanBinding.inflate(inflater)
+    override fun inflateViewBinding(inflater: LayoutInflater): ActivityCopyPlanBinding {
+        return ActivityCopyPlanBinding.inflate(inflater)
     }
 }

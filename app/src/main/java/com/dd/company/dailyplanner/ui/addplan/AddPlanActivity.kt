@@ -45,7 +45,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
 
     private var isNotifyStartPlan = true
     private var isNotifyEndPlan = false
-
+    private var isInbox = false
     private var imagePlan = "ic_email"
     private var loopType: Int = 1
     private var lastSelectedHourStart = 8
@@ -76,6 +76,18 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
     }
 
     override fun initData() {
+        isInbox = intent?.extras?.getBoolean("is_inbox") ?: false
+        if (isInbox) {
+            newPlanEntity.type = TYPE_INBOX
+            binding.tvLoopTitle.gone()
+            binding.layoutLoop.gone()
+            binding.layoutSetTime.gone()
+            binding.layoutInbox.show()
+            binding.btnAddToBox.gone()
+            binding.btnAddTime.gone()
+            binding.tvNeedNotification.gone()
+            binding.layoutNotification.gone()
+        }
         apiService.getPlan(email).enqueueShort(success = {
             val body = it.body()
             if (body?.status == true) {
@@ -127,6 +139,8 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
             showDialogTimeEnd()
         }
         binding.btnAddToBox.setOnClickListener {
+            binding.tvLoopTitle.gone()
+            binding.layoutLoop.gone()
             newPlanEntity.type = TYPE_INBOX
             binding.layoutSetTime.gone()
             binding.layoutInbox.show()
@@ -136,6 +150,8 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
             binding.layoutNotification.gone()
         }
         binding.btnAddTime.setOnClickListener {
+            binding.tvLoopTitle.show()
+            binding.layoutLoop.show()
             newPlanEntity.type = TYPE_PLAN
             binding.layoutSetTime.show()
             binding.layoutInbox.gone()
@@ -197,6 +213,11 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                 this.startTime = timeStart
                 this.endTime = timeEnd
             }
+        } else {
+            newPlanEntity.apply {
+                this.startTime = 0
+                this.endTime = 0
+            }
         }
         //detail description
         newPlanEntity.name = binding.edtDetailPlan.text.toString()
@@ -204,7 +225,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
             LOOP_ONE, LOOP_WEEK, LOOP_MONTH -> {
                 newPlanEntity.id = -1
                 listPlan.add(newPlanEntity)
-                if (isNotifyStartPlan) {
+                if (isNotifyStartPlan && newPlanEntity.type == TYPE_PLAN) {
                     setReminder(
                         this,
                         newPlanEntity.content,
@@ -212,7 +233,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                         newPlanEntity.startTime
                     )
                 }
-                if (isNotifyEndPlan) {
+                if (isNotifyEndPlan && newPlanEntity.type == TYPE_PLAN) {
                     setReminder(
                         this,
                         newPlanEntity.content,
@@ -235,11 +256,11 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                         set(year, month - 1, i, lastSelectedHourEnd, lastSelectedMinuteEnd)
                     }.timeInMillis
                     val plan = newPlanEntity.copy()
-                    plan.startTime = timeStart
-                    plan.endTime = timeEnd
+                    plan.startTime = if (plan.type == TYPE_PLAN) timeStart else 0
+                    plan.endTime = if (plan.type == TYPE_PLAN) timeEnd else 0
                     plan.id = -i.toLong()
                     listPlan.add(plan)
-                    if (isNotifyStartPlan) {
+                    if (isNotifyStartPlan && newPlanEntity.type == TYPE_PLAN) {
                         setReminder(
                             this,
                             plan.content,
@@ -247,7 +268,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
                             plan.startTime
                         )
                     }
-                    if (isNotifyEndPlan) {
+                    if (isNotifyEndPlan && newPlanEntity.type == TYPE_PLAN) {
                         setReminder(
                             this,
                             plan.content,

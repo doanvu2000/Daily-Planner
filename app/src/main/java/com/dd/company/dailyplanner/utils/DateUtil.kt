@@ -1,10 +1,8 @@
 package com.dd.company.dailyplanner.utils
 
 import android.annotation.SuppressLint
-import com.dd.company.dailyplanner.utils.DateUtil.toCalendar
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 object DateUtil {
     const val DATE_FORMAT_HOUR_MINUTES = "yyyy-MM-dd-hh-mm"
@@ -118,6 +116,22 @@ object DateUtil {
             day = it[2].toInt()
         }
         return String.format("%02d", day) + "/" + String.format("%02d", month) + "/" + year
+    }
+
+    fun compareTwoTime(hour1: Int, minutes: Int, hour2: Int, minutes2: Int): Boolean {
+        if (hour1 > hour2) {
+            return false
+        }
+        if (hour1 < hour2) {
+            return true
+        }
+        if (minutes < minutes2) {
+            return true
+        }
+        if (minutes >= minutes2) {
+            return false
+        }
+        return true
     }
 
     fun Long.toCalendar(): Calendar {

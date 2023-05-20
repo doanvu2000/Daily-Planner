@@ -22,7 +22,7 @@
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Tạo nhiệm vụ" />
+            tools:text="Sao chép nhiệm vụ" />
 
         <ImageView
             android:id="@+id/btnClose"
@@ -584,7 +584,7 @@
                     android:layout_marginBottom="50dp"
                     android:background="@drawable/background_button_continue"
                     android:fontFamily="@font/inter_bold_700"
-                    android:text="Tạo nhiệm vụ"
+                    android:text="Sao chép nhiệm vụ"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp" />

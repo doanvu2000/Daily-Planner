@@ -353,6 +353,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tvTitleLoop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -363,6 +364,7 @@
                     android:textSize="18sp" />
 
                 <LinearLayout
+                    android:id="@+id/layoutLoop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"

@@ -1,6 +1,7 @@
 package com.dd.company.dailyplanner.ui.home
 
 import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.dd.company.dailyplanner.data.api.RetrofitClient
 import com.dd.company.dailyplanner.databinding.ActivityMainBinding
 import com.dd.company.dailyplanner.ui.addplan.AddPlanActivity
 import com.dd.company.dailyplanner.ui.base.BaseActivity
+import com.dd.company.dailyplanner.ui.copyplan.CopyPlanActivity
 import com.dd.company.dailyplanner.ui.editplan.EditPlanActivity
 import com.dd.company.dailyplanner.ui.inbox.InboxActivity
 import com.dd.company.dailyplanner.ui.setting.SettingActivity
@@ -180,6 +182,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun initListener() {
         binding.tvTimeTitle.setOnSafeClick {
             resetTitleToDay(DateUtil.getMonthInt() + 1, DateUtil.getYear())
+            initData()
         }
         binding.btnCalendar.setOnSafeClick {
             showDialogPickDate()
@@ -220,6 +223,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
         binding.btnCopyPlan.setOnSafeClick {
             //copy plan
+            hideLayoutEdit()
+            openActivity(CopyPlanActivity::class.java, bundleOf("plan_entity" to planSelected))
         }
         binding.btnDonePlan.setOnSafeClick {
             //done plan
@@ -230,6 +235,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             hideLayoutEdit()
         }
         binding.btnEditPlan.setOnSafeClick {
+            //edit plan
             hideLayoutEdit()
             openActivity(EditPlanActivity::class.java, bundleOf("plan_entity" to planSelected))
         }
