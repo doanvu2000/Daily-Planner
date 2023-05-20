@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Passcode"
+                android:text="Mã khóa"
                 android:paddingStart="12dp"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
@@ -95,7 +95,7 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Enter your passcode"
+                android:text="Nhập mã khóa"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
