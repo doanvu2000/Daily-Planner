@@ -69,6 +69,4 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson
     implementation("com.squareup.retrofit2:converter-gson:$gson_version")
 
-    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
-
 }
