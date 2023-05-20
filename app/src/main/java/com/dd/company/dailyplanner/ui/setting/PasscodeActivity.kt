@@ -1,45 +1,36 @@
-package com.dd.company.dailyplanner.ui.splash
+package com.dd.company.dailyplanner.ui.setting
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
 import com.dd.company.dailyplanner.R
-import com.dd.company.dailyplanner.databinding.ActivitySplashBinding
-import com.dd.company.dailyplanner.ui.login.LoginActivity
+import com.dd.company.dailyplanner.databinding.LayoutLockBinding
+import com.dd.company.dailyplanner.ui.base.BaseActivity
 import com.dd.company.dailyplanner.utils.SharePreferenceUtil
-import com.dd.company.dailyplanner.utils.openActivity
-import com.dd.company.dailyplanner.utils.show
 import com.dd.company.dailyplanner.utils.showToast
 
-@SuppressLint("CustomSplashScreen")
-class SplashActivity : AppCompatActivity() {
-    lateinit var binding: ActivitySplashBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+class PasscodeActivity : BaseActivity<LayoutLockBinding>() {
 
+    private var passCode = ""
+    private var passCodeConfirm = ""
+    
+    override fun initView() {
+        
+    }
 
-        if (SharePreferenceUtil.getPassCode() != "") {
-            binding.llPasscode.show()
-        } else {
-            startMain(300L)
+    override fun initData() {
+    }
+
+    override fun initListener() {
+        binding.toolbar.ivBack.setOnClickListener {
+            onBackPressed()
         }
+        binding.toolbar.ivBack.setOnClickListener {
+            finish()
+        }
+//        binding.llDeletePasscode.setOnClickListener {
+//            SharePreferenceUtils.setPassCode(this,"")
+//            onBackPressed()
+//        }
 
-        initListener()
-
-    }
-
-    private fun startMain(timeDelay:Long) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            openActivity(LoginActivity::class.java)
-        }, timeDelay)
-    }
-
-
-    fun initListener() {
         binding.number1.setOnClickListener { clickNumber(1) }
         binding.number2.setOnClickListener { clickNumber(2) }
         binding.number3.setOnClickListener { clickNumber(3) }
@@ -51,26 +42,49 @@ class SplashActivity : AppCompatActivity() {
         binding.number9.setOnClickListener { clickNumber(9) }
         binding.number0.setOnClickListener { clickNumber(0) }
         binding.imgDelete.setOnClickListener { clickNumber(-1) }
+
     }
 
-    private var passCode = ""
+    override fun inflateViewBinding(inflater: LayoutInflater): LayoutLockBinding {
+        return LayoutLockBinding.inflate(inflater)
+    }
+
+    private var isConfirm = false
     private fun clickNumber(number : Int) {
-        if (number != -1) {
-            if (passCode.length == 4) {
-                return
-            }
-            passCode += number
-        } else {
-            passCode = passCode.substring(0, passCode.length -1)
-        }
-        showPass(passCode)
-        if (passCode.length == 4) {
-            if (passCode == SharePreferenceUtil.getPassCode()) {
-                startMain(0L)
+        if (!isConfirm) {
+            if (number != -1) {
+                if (passCode.length == 4) {
+                    return
+                }
+                passCode += number
             } else {
-                showToast("Passcode incorrect")
-                passCode = ""
-                showPass(passCode)
+                passCode = passCode.substring(0, passCode.length -1)
+            }
+            showPass(passCode)
+            if (passCode.length == 4) {
+                isConfirm = true
+                passCodeConfirm = ""
+                showPass(passCodeConfirm)
+                binding.tvTitle.text = "Confirm passcode"
+            }
+        } else {
+            if (number != -1) {
+                if (passCodeConfirm.length == 4) {
+                    return
+                }
+                passCodeConfirm += number
+            } else {
+                passCodeConfirm = passCodeConfirm.substring(0, passCodeConfirm.length -1)
+            }
+            showPass(passCodeConfirm)
+            if (passCodeConfirm.length == 4) {
+                if (passCode == passCodeConfirm) {
+                    SharePreferenceUtil.setPassCode(passCode)
+                    showToast("Success")
+                    onBackPressed()
+                } else {
+                    showToast("Mật khẩu không trùng nhau")
+                }
             }
         }
     }
