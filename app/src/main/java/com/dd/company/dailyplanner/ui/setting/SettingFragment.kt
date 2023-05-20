@@ -31,7 +31,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         }
         binding.swPasscode.setOnCheckedChangeListener { compoundButton, b ->
             if (b) {
-                if (!isFirstOpen) {
+                if (!isFirstOpen||SharePreferenceUtil.getPassCode().isEmpty()) {
                     (activity as? SettingActivity)?.openActivity(PasscodeActivity::class.java)
                 } else {
                     isFirstOpen = false
