@@ -65,7 +65,7 @@ class PasscodeActivity : BaseActivity<LayoutLockBinding>() {
                 isConfirm = true
                 passCodeConfirm = ""
                 showPass(passCodeConfirm)
-                binding.tvTitle.text = "Confirm passcode"
+                binding.tvTitle.text = "Xác nhận mật khẩu"
             }
         } else {
             if (number != -1) {
@@ -80,7 +80,7 @@ class PasscodeActivity : BaseActivity<LayoutLockBinding>() {
             if (passCodeConfirm.length == 4) {
                 if (passCode == passCodeConfirm) {
                     SharePreferenceUtil.setPassCode(passCode)
-                    showToast("Success")
+                    showToast("Đặt mật khẩu thành công")
                     onBackPressed()
                 } else {
                     showToast("Mật khẩu không trùng nhau")
