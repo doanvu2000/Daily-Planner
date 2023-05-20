@@ -61,6 +61,8 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
     }
 
     private fun setDataList() {
+        binding.layoutInboxEmpty.visibleByCondition(listPlan.filter { it.type == 1 }.isEmpty())
+        binding.layoutListInbox.visibleByCondition(listPlan.filter { it.type == 1 }.isNotEmpty())
         inboxDoneAdapter.setDataList(listPlan.filter { it.isDone && it.type == 1 })
         inboxNotDoneAdapter.setDataList(listPlan.filter { !it.isDone && it.type == 1 })
     }
@@ -72,6 +74,9 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
     override fun initListener() {
         binding.btnClose.setOnSafeClick { onBack() }
         binding.btnAddnewInbox.setOnSafeClick {
+            openActivity(AddPlanActivity::class.java, bundleOf("is_inbox" to true))
+        }
+        binding.btnAddNewInbox2.setOnSafeClick {
             openActivity(AddPlanActivity::class.java, bundleOf("is_inbox" to true))
         }
         inboxDoneAdapter.onClickPlus = { item, position ->
@@ -139,9 +144,13 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
         showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
-            initData()
-            msg?.let {
-                showToast(it)
+            if (it.code() == 200) {
+                initData()
+                msg?.let {
+                    showToast(it)
+                }
+            } else {
+                showToast("${it.raw()}")
             }
         }, failed = {
             hideLoading()
@@ -158,16 +167,19 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
         data.addAll(inboxDoneAdapter.dataList)
         data.addAll(inboxNotDoneAdapter.dataList)
         data.sortBy { it.id }
-        if (oldList != data){
+        if (oldList != data) {
             finish()
-        }else{
+        } else {
             showLoading()
             apiService.syncPlan(email, data).enqueueShort(success = {
                 hideLoading()
+                if (it.code() != 200) {
+                    showToast("${it.raw()}")
+                }
                 finish()
             }, failed = {
                 hideLoading()
-                showToast("Error when add plan: ${it.message}")
+                showToast("Lỗi khi lưu dữ liệu: ${it.message}")
             })
         }
     }

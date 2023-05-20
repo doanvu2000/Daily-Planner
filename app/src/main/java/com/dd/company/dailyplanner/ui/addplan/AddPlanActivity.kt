@@ -283,11 +283,15 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
         showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
-            showToast("add plan success")
-            finish()
+            if (it.code() == 200) {
+                showToast("Thêm thành công")
+                finish()
+            } else {
+                showToast("${it.raw()}")
+            }
         }, failed = {
             hideLoading()
-            showToast("Error when add plan: ${it.message}")
+            showToast("Lỗi khi thêm nhiệm vụ: ${it.message}")
         })
     }
 
@@ -328,11 +332,11 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
         val timeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
             if (isValidateTime(hourOfDay, minute)) {
                 binding.tvEndTime.text =
-                    "Time end: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+                    "Thời gian kết thúc: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
                 lastSelectedHourEnd = hourOfDay
                 lastSelectedMinuteEnd = minute
             } else {
-                showToast("Require: Time end > Time start")
+                showToast("Thời gian kết thúc phải lớn hơn thời gian bắt đầu")
             }
         }
         val timePickerDialog = TimePickerDialog(
@@ -348,7 +352,7 @@ class AddPlanActivity : BaseActivity<ActivityAddPlanBinding>() {
 
         val timeSetListener = OnTimeSetListener { _, hourOfDay, minute ->
             binding.tvStartTime.text =
-                "Time start: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+                "Thời gian bắt đầu: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
             lastSelectedHourStart = hourOfDay
             lastSelectedMinuteStart = minute
         }

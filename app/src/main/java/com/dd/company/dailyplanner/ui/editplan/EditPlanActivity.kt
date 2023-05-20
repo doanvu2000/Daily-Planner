@@ -75,9 +75,9 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
     override fun initData() {
         planEntity = (intent?.extras?.getSerializable("plan_entity") as? PlanEntity) ?: PlanEntity()
         binding.tvStartTime.text =
-            "Time start: ${DateUtil.getHourMinuteFormatFromLong(planEntity.startTime)}"
+            "Thời gian bắt đầu: ${DateUtil.getHourMinuteFormatFromLong(planEntity.startTime)}"
         binding.tvEndTime.text =
-            "Time end: ${DateUtil.getHourMinuteFormatFromLong(planEntity.endTime)}"
+            "Thời gian kết thúc: ${DateUtil.getHourMinuteFormatFromLong(planEntity.endTime)}"
         binding.imgIconPlan.setImageResource(getDrawableIdByName(planEntity.icon))
         lastSelectedHourStart = planEntity.startTime.getHour()
         lastSelectedMinuteStart = planEntity.startTime.getMinutes()
@@ -258,11 +258,15 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
         showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
-            showToast("edit plan success")
-            finish()
+            if (it.code() == 200) {
+                showToast("Sửa thành công")
+                finish()
+            } else {
+                showToast("${it.raw()}")
+            }
         }, failed = {
             hideLoading()
-            showToast("Error when add plan: ${it.message}")
+            showToast("Lỗi khi sửa: ${it.message}")
         })
 
     }
@@ -302,11 +306,11 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             if (isValidateTime(hourOfDay, minute)) {
                 binding.tvEndTime.text =
-                    "Time end: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+                    "Thời gian kết thúc: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
                 lastSelectedHourEnd = hourOfDay
                 lastSelectedMinuteEnd = minute
             } else {
-                showToast("Require: Time end > Time start")
+                showToast("Thời gian kết thúc phải lớn hơn thời gian bắt đầu")
             }
         }
         val timePickerDialog = TimePickerDialog(
@@ -322,7 +326,7 @@ class EditPlanActivity : BaseActivity<ActivityEditPlanBinding>() {
 
         val timeSetListener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             binding.tvStartTime.text =
-                "Time start: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
+                "Thời gian bắt đầu: ${DateUtil.formatHourMinutes(hourOfDay, minute)}"
             lastSelectedHourStart = hourOfDay
             lastSelectedMinuteStart = minute
         }

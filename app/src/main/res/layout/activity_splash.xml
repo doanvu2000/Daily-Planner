@@ -21,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_bold_700"
+        android:gravity="center"
         android:text="Lập kế hoạch cùng Daily Planner!"
         android:textColor="@color/aqua"
         android:textSize="18sp"
@@ -39,6 +40,8 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <ProgressBar
+        android:indeterminateDrawable="@drawable/progress_bg"
+        android:indeterminate="true"
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,10 +52,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/llPasscode"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/tool_bar"
@@ -67,8 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Mã khóa"
                 android:paddingStart="12dp"
+                android:text="Mã khóa"
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
@@ -79,26 +82,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tool_bar"
-            android:orientation="vertical">
+            app:layout_constraintTop_toBottomOf="@+id/tool_bar">
 
             <ImageView
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/ic_lockapp"
-                android:layout_marginBottom="24dp"/>
+                android:layout_marginBottom="24dp"
+                android:src="@drawable/ic_lockapp" />
 
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="Nhập mã khóa"
-                android:textSize="20dp"
                 android:textColor="@color/black"
-                android:layout_marginBottom="16dp"/>
+                android:textSize="20dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -108,29 +111,29 @@
                     android:id="@+id/passcode1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_round_radio_button_unchecked"
-                    android:layout_marginHorizontal="4dp"/>
+                    android:layout_marginHorizontal="4dp"
+                    android:src="@drawable/ic_round_radio_button_unchecked" />
 
                 <ImageView
                     android:id="@+id/passcode2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_round_radio_button_unchecked"
-                    android:layout_marginHorizontal="4dp"/>
+                    android:layout_marginHorizontal="4dp"
+                    android:src="@drawable/ic_round_radio_button_unchecked" />
 
                 <ImageView
                     android:id="@+id/passcode3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_round_radio_button_unchecked"
-                    android:layout_marginHorizontal="4dp"/>
+                    android:layout_marginHorizontal="4dp"
+                    android:src="@drawable/ic_round_radio_button_unchecked" />
 
                 <ImageView
                     android:id="@+id/passcode4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_round_radio_button_unchecked"
-                    android:layout_marginHorizontal="4dp"/>
+                    android:layout_marginHorizontal="4dp"
+                    android:src="@drawable/ic_round_radio_button_unchecked" />
 
             </LinearLayout>
 
@@ -200,8 +203,8 @@
                     android:id="@+id/number4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="4"
                     android:textColor="#333333"
@@ -211,9 +214,9 @@
                     android:id="@+id/number5"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
-                     
+                    android:layout_weight="1"
+
                     android:gravity="center"
                     android:text="5"
                     android:textColor="#333333"
@@ -223,9 +226,9 @@
                     android:id="@+id/number6"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginHorizontal="8dp"
-                     
+                    android:layout_weight="1"
+
                     android:gravity="center"
                     android:text="6"
                     android:textColor="#333333"
@@ -246,7 +249,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:text="7"
                     android:textColor="#333333"
@@ -258,7 +261,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:text="8"
                     android:textColor="#333333"
@@ -270,7 +273,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:text="9"
                     android:textColor="#333333"
@@ -290,7 +293,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:text="4"
                     android:textColor="#333333"
@@ -303,7 +306,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:text="0"
                     android:textColor="#333333"
@@ -315,7 +318,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="8dp"
                     android:layout_weight="1"
-                     
+
                     android:gravity="center"
                     android:padding="8dp"
                     android:src="@drawable/ic_delete_passcode"

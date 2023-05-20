@@ -312,7 +312,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="20dp"
-                        android:hint="Click to choose start time" />
+                        android:hint="Ấn để chọn thời gian bắt đầu" />
 
                     <TextView
                         android:id="@+id/tvEndTime"
@@ -321,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="20dp"
-                        android:hint="Click to choose end time" />
+                        android:hint="Ấn để chọn thời gian kết thúc" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -591,6 +591,8 @@
             </LinearLayout>
         </LinearLayout>
         <ProgressBar
+            android:indeterminateDrawable="@drawable/progress_bg"
+            android:indeterminate="true"
             android:id="@+id/loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

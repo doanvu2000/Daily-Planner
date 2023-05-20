@@ -52,10 +52,14 @@ class AdvanceSettingFrag : BaseFragment<LayoutAdvanceSettingBinding>() {
                 showLoading()
                 apiService.syncPlan(email, mutableListOf()).enqueueShort(success = {
                     hideLoading()
-                    requireContext().showToast("Application reset success!")
+                    if (it.code() == 200) {
+                        requireContext().showToast("Đã xóa tất cả dữ liệu!")
+                    } else {
+                        requireContext().showToast("${it.raw()}")
+                    }
                 }, failed = {
                     hideLoading()
-                    requireContext().showToast(it.message ?: "Failed to reset application!")
+                    requireContext().showToast(it.message ?: "Lỗi khi xóa dữ liệu!")
                 })
             }
         }

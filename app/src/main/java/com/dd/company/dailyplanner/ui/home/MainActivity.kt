@@ -273,9 +273,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
-            initDataPlan()
-            msg?.let {
-                showToast(it)
+            if (it.code() == 200) {
+                initDataPlan()
+                msg?.let {
+                    showToast(it)
+                }
+            } else {
+                showToast("${it.raw()}")
             }
         }, failed = {
             hideLoading()

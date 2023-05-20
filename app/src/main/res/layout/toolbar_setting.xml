@@ -7,20 +7,21 @@
     <ImageView
         android:id="@+id/iv_back"
         android:layout_width="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="?selectableItemBackgroundBorderless"
+        android:padding="10dp"
         android:src="@drawable/ic_back_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/toolbarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold_700"
         android:text="Khoá ứng dụng"
         android:textColor="@color/black"
-        android:fontFamily="@font/inter_bold_700"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/iv_back"
         app:layout_constraintEnd_toEndOf="parent"

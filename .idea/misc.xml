@@ -11,6 +11,7 @@
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/drawable/bg_white_round_top.xml" value="0.232" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/drawable/layout_round.xml" value="0.1595" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/drawable/layout_round_10.xml" value="0.2125" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/drawable/progress_bg.xml" value="0.239" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_add_plan.xml" value="0.2" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_copy_plan.xml" value="0.33106884057971014" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_edit_plan.xml" value="0.33106884057971014" />
@@ -20,7 +21,7 @@
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_register.xml" value="0.33106884057971014" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_setting.xml" value="0.33106884057971014" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/activity_splash.xml" value="0.18" />
-        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/fragment_setting.xml" value="0.2708333333333333" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/fragment_setting.xml" value="0.67" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/item_choose_icon.xml" value="0.35688405797101447" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/item_layout_plan.xml" value="0.22" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/item_weekly_home.xml" value="0.4678442028985507" />
@@ -30,6 +31,7 @@
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/layout_dialog_pick_date_add_bean.xml" value="0.2708333333333333" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/layout_item_inbox_done.xml" value="0.33106884057971014" />
         <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/layout_item_inbox_not_done.xml" value="0.33106884057971014" />
+        <entry key="..\:/dd_code/DailyPlanner/app/src/main/res/layout/toolbar_setting.xml" value="0.2708333333333333" />
       </map>
     </option>
   </component>

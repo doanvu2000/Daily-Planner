@@ -8,6 +8,7 @@ import android.widget.CompoundButton
 import com.dd.company.dailyplanner.databinding.FragmentSettingBinding
 import com.dd.company.dailyplanner.ui.base.BaseFragment
 import com.dd.company.dailyplanner.utils.SharePreferenceUtil
+import com.dd.company.dailyplanner.utils.gone
 import com.dd.company.dailyplanner.utils.openActivity
 
 class SettingFragment : BaseFragment<FragmentSettingBinding>() {
@@ -20,26 +21,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
     }
 
     override fun initView() {
-
     }
 
     override fun initData() {
+        binding.tvEmail.text = SharePreferenceUtil.get(SharePreferenceUtil.EMAIL_LOGIN).trim()
     }
 
     override fun initListener() {
-        binding.settingNotification.setOnClickListener {
-            (activity as? SettingActivity)?.addFragment(SettingNotificationFrag())
-        }
         binding.advanceSetting.setOnClickListener {
             (activity as? SettingActivity)?.addFragment(AdvanceSettingFrag())
         }
-        binding.toolbar.ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             activity?.onBackPressed()
         }
     }
+
     private val listener = CompoundButton.OnCheckedChangeListener { p0, b ->
         if (b) {
-            if (!isFirstOpen||SharePreferenceUtil.getPassCode().isEmpty()) {
+            if (!isFirstOpen || SharePreferenceUtil.getPassCode().isEmpty()) {
                 (activity as? SettingActivity)?.openActivity(PasscodeActivity::class.java)
             } else {
                 isFirstOpen = false
