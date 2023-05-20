@@ -293,6 +293,11 @@ class CopyPlanActivity : BaseActivity<ActivityCopyPlanBinding>() {
             }
         }
         showLoading()
+        listPlan.forEach {
+            if (it.name.isEmpty()) {
+                it.name = "."
+            }
+        }
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
             if (it.code() == 200) {

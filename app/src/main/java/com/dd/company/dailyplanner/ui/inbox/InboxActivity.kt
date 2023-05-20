@@ -142,6 +142,11 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
     @SuppressLint("NotifyDataSetChanged")
     private fun syncPlan(msg: String? = null) {
         showLoading()
+        listPlan.forEach {
+            if (it.name.isEmpty()) {
+                it.name = "."
+            }
+        }
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
             hideLoading()
             if (it.code() == 200) {
@@ -171,6 +176,11 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
             finish()
         } else {
             showLoading()
+            listPlan.forEach {
+                if (it.name.isEmpty()) {
+                    it.name = "."
+                }
+            }
             apiService.syncPlan(email, data).enqueueShort(success = {
                 hideLoading()
                 if (it.code() != 200) {

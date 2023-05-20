@@ -9,7 +9,7 @@ data class PlanEntity(
     @SerializedName("icon")
     var icon: String = "",
     @SerializedName("name")
-    var name: String = "",
+    var name: String = ".",
     @SerializedName("content")
     var content: String = "",
     @SerializedName("startTime")
