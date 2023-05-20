@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import com.dd.company.dailyplanner.databinding.FragmentSettingBinding
 import com.dd.company.dailyplanner.ui.base.BaseFragment
 import com.dd.company.dailyplanner.utils.SharePreferenceUtil
@@ -29,17 +30,6 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
         binding.settingNotification.setOnClickListener {
             (activity as? SettingActivity)?.addFragment(SettingNotificationFrag())
         }
-        binding.swPasscode.setOnCheckedChangeListener { compoundButton, b ->
-            if (b) {
-                if (!isFirstOpen||SharePreferenceUtil.getPassCode().isEmpty()) {
-                    (activity as? SettingActivity)?.openActivity(PasscodeActivity::class.java)
-                } else {
-                    isFirstOpen = false
-                }
-            } else {
-                SharePreferenceUtil.setPassCode("")
-            }
-        }
         binding.advanceSetting.setOnClickListener {
             (activity as? SettingActivity)?.addFragment(AdvanceSettingFrag())
         }
@@ -47,10 +37,24 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>() {
             activity?.onBackPressed()
         }
     }
+    private val listener = CompoundButton.OnCheckedChangeListener { p0, b ->
+        if (b) {
+            if (!isFirstOpen||SharePreferenceUtil.getPassCode().isEmpty()) {
+                (activity as? SettingActivity)?.openActivity(PasscodeActivity::class.java)
+            } else {
+                isFirstOpen = false
+            }
+        } else {
+            SharePreferenceUtil.setPassCode("")
+        }
+    }
+
 
     override fun onResume() {
         super.onResume()
+        binding.swPasscode.setOnCheckedChangeListener(null)
         binding.swPasscode.isChecked = SharePreferenceUtil.getPassCode().isNotEmpty()
+        binding.swPasscode.setOnCheckedChangeListener(listener)
     }
 
     override fun inflateLayout(
