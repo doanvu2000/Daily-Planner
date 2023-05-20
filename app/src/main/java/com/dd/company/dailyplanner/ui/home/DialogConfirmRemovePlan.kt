@@ -22,7 +22,17 @@ class DialogConfirmRemovePlan(val context: Context) {
         dialog.dismiss()
     }
 
-    fun show(onConfirmRemovePlan: () -> Unit) {
+    fun show(
+        title: String? = null,
+        stringSubmit: String? = null,
+        onConfirmRemovePlan: () -> Unit
+    ) {
+        title?.let {
+            binding.tvTitle.text = it
+        }
+        stringSubmit?.let {
+            binding.btnRemovePlan.text = it
+        }
         binding.btnRemovePlan.setOnSafeClick {
             hide()
             onConfirmRemovePlan.invoke()

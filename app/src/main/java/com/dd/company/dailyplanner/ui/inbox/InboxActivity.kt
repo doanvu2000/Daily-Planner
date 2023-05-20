@@ -136,27 +136,40 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun syncPlan(msg: String? = null) {
+        showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
+            hideLoading()
             initData()
             msg?.let {
                 showToast(it)
             }
         }, failed = {
+            hideLoading()
             showToast("Failed to update status plan")
         })
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun onBack() {
-        val data = listPlan.filter { it.type == 0 }.toMutableList()
+        val oldList = listPlan.apply {
+            listPlan.sortBy { it.id }
+        }
+        val data = oldList.filter { it.type == 0 }.toMutableList()
         data.addAll(inboxDoneAdapter.dataList)
         data.addAll(inboxNotDoneAdapter.dataList)
-        apiService.syncPlan(email, data).enqueueShort(success = {
+        data.sortBy { it.id }
+        if (oldList != data){
             finish()
-        }, failed = {
-            showToast("Error when add plan: ${it.message}")
-        })
-
+        }else{
+            showLoading()
+            apiService.syncPlan(email, data).enqueueShort(success = {
+                hideLoading()
+                finish()
+            }, failed = {
+                hideLoading()
+                showToast("Error when add plan: ${it.message}")
+            })
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -184,6 +197,14 @@ class InboxActivity : BaseActivity<ActivityInboxBinding>() {
 
     private fun hideLayoutEdit() {
         binding.layoutBottomEdit.gone()
+    }
+
+    private fun showLoading() {
+        binding.loading.show()
+    }
+
+    private fun hideLoading() {
+        binding.loading.gone()
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityInboxBinding {

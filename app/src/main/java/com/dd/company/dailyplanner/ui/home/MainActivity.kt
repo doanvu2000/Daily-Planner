@@ -270,12 +270,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun syncPlan(msg: String? = null) {
+        showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
+            hideLoading()
             initDataPlan()
             msg?.let {
                 showToast(it)
             }
         }, failed = {
+            hideLoading()
             showToast("${it.message}")
         })
     }
@@ -350,6 +353,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun showLoading() {
+        binding.loading.show()
+    }
+
+    private fun hideLoading() {
+        binding.loading.gone()
     }
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityMainBinding {

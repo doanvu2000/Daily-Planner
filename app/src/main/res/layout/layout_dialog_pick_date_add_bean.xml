@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/inter_bold_700"
                 android:gravity="center"
-                android:text="Pick your plan day"
+                android:text="Chọn ngày hiển thị"
                 android:textColor="@color/black"
                 android:textSize="22sp" />
 
@@ -58,7 +58,7 @@
                     android:fontFamily="@font/inter_extra_bold_800"
                     android:includeFontPadding="false"
                     android:paddingVertical="14dp"
-                    android:text="Cancel"
+                    android:text="Hủy"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:theme="@style/Theme.MaterialComponents.Light"

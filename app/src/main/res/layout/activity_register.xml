@@ -60,7 +60,7 @@
             android:id="@+id/edtGmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Gmail"
+            android:hint="Email"
             android:inputType="" />
     </com.google.android.material.textfield.TextInputLayout>
 

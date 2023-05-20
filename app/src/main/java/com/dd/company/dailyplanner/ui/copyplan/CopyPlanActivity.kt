@@ -292,12 +292,23 @@ class CopyPlanActivity : BaseActivity<ActivityCopyPlanBinding>() {
 
             }
         }
+        showLoading()
         apiService.syncPlan(email, listPlan).enqueueShort(success = {
+            hideLoading()
             showToast("add plan success")
             finish()
         }, failed = {
+            hideLoading()
             showToast("Error when add plan: ${it.message}")
         })
+    }
+
+    private fun showLoading() {
+        binding.loading.show()
+    }
+
+    private fun hideLoading() {
+        binding.loading.gone()
     }
 
     private fun setUpCloseIconNotify() {

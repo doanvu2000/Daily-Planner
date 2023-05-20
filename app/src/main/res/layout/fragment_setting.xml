@@ -13,15 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:padding="10dp"
         android:background="@drawable/bg_control_setting"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <LinearLayout
             android:id="@+id/setting_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="35dp"
@@ -29,14 +30,14 @@
                 android:src="@drawable/ic_notification" />
 
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:paddingHorizontal="10dp"
-                android:fontFamily="@font/inter_bold_700"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Thông báo" />
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_bold_700"
+                android:paddingHorizontal="10dp"
+                android:text="Thông báo"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -45,14 +46,14 @@
         </LinearLayout>
 
         <View
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#C4C4C6"/>
+            android:layout_marginTop="15dp"
+            android:background="#C4C4C6"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/setting_app"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
@@ -63,14 +64,14 @@
                 android:src="@drawable/ic_lockapp" />
 
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:paddingHorizontal="10dp"
-                android:fontFamily="@font/inter_bold_700"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Khóa ứng dụng" />
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_bold_700"
+                android:paddingHorizontal="10dp"
+                android:text="Khóa ứng dụng"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <Switch
                 android:id="@+id/swPasscode"
@@ -80,16 +81,16 @@
         </LinearLayout>
 
         <View
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#C4C4C6"/>
+            android:layout_marginTop="15dp"
+            android:background="#C4C4C6" />
 
         <LinearLayout
             android:id="@+id/advance_setting"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical">
 
             <ImageView
@@ -98,14 +99,14 @@
                 android:src="@drawable/ic_advance_setting" />
 
             <TextView
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:paddingHorizontal="10dp"
-                android:fontFamily="@font/inter_bold_700"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Cài đặt nâng cao" />
+                android:layout_weight="1"
+                android:fontFamily="@font/inter_bold_700"
+                android:paddingHorizontal="10dp"
+                android:text="Cài đặt nâng cao"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
             <ImageView
                 android:layout_width="wrap_content"
